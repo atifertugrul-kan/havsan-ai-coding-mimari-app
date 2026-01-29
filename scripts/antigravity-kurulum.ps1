@@ -6,10 +6,10 @@ param([switch]$Startup)
 try {
     # --- CHANGELOG ---
     $CHANGELOG = @'
-    [v2.6.0 YENILIKLER]
-    - Otomasyon: Guncelleme sonrasi Antigravity IDE otomatik acilir
-    - Kural: "Refresh Rules" hatirlatmasi icin zorunlu onay ekrani
-    - Arayuz: Satir araliklari ve layout optimize edildi
+    [v2.6.1 YENILIKLER]
+    - Fix: "Antigravity IDE" artik VS Code yerine Cursor'i acar
+    - Otomasyon: Cursor bulunamazsa VS Code fallback devreye girer
+    - Kural: Versiyon senkronizasyonu guclendirildi
 '@
 
     # Helper Functions
@@ -56,7 +56,7 @@ try {
     Write-Host ""
     Write-Host "    Atif Ertugrul Kan" -F Yellow
     Write-Host "    Kurumsal Gelistirici Altyapi Mimari & HAVSAN CTO" -F DarkGray
-    Write-Host "    v2.6.0 (Auto-Launch)" -F Gray
+    Write-Host "    v2.6.1 (Cursor Support)" -F Gray
     Write-Host ""
     Write-Host ""
     Write-Host $CHANGELOG -F Green
