@@ -68,7 +68,8 @@ try {
 
     # Step 2: Backup
     Upd-Prog "Yedekleme"; Log-H "2. Yedekleme"
-    $bDir = "$TGT\backups\$($isUpd?'upd':'inst')_$(Get-Date -F 'yyyyMMdd_HHmmss')"
+    $prefix = if ($isUpd) { "guncelleme" } else { "kurulum" }
+    $bDir = "$TGT\backups\${prefix}_oncs_$(Get-Date -F 'yyyyMMdd_HHmmss')"
     New-Item -Type Directory -Force $bDir | Out-Null
     
     Copy-Safe "$TGT\GEMINI.md" "$bDir\GEMINI.md"
