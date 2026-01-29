@@ -10,7 +10,7 @@
 
 # 🚀 HAVSAN Antigravity
 
-**Versiyon:** 2.5.1 (Spacing Fix)
+**Versiyon:** 2.6.0 (Auto-Launch)
 **Amaç:** HAVSAN Yapay Zeka & Robotik ekibi için standart geliştirme ortamı.
 
 ---

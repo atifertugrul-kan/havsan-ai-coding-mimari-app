@@ -6,10 +6,10 @@ param([switch]$Startup)
 try {
     # --- CHANGELOG ---
     $CHANGELOG = @'
-    [v2.5.1 YENILIKLER]
-    - Arayuz: Satir araliklari geniletildi (Daha iyi okunabilirlik)
-    - Branding: ELAZIG ORGANIZE SANAYI BOLGESI imzasi
-    - Fix: Eski versiyon numarasi gorunme sorunu giderildi
+    [v2.6.0 YENILIKLER]
+    - Otomasyon: Guncelleme sonrasi Antigravity IDE otomatik acilir
+    - Kural: "Refresh Rules" hatirlatmasi icin zorunlu onay ekrani
+    - Arayuz: Satir araliklari ve layout optimize edildi
 '@
 
     # Helper Functions
@@ -43,7 +43,7 @@ try {
 
     Clear-Host
 
-    # ASCII Art (Restored & Extended)
+    # ASCII Art
     Write-Host @'
   _   _    _ __     __ ___    _    _   _ 
  | | | |  / \\ \   / // __|  / \  | \ | |
@@ -56,7 +56,7 @@ try {
     Write-Host ""
     Write-Host "    Atif Ertugrul Kan" -F Yellow
     Write-Host "    Kurumsal Gelistirici Altyapi Mimari & HAVSAN CTO" -F DarkGray
-    Write-Host "    v2.5.1 (Spacing Fix)" -F Gray
+    Write-Host "    v2.6.0 (Auto-Launch)" -F Gray
     Write-Host ""
     Write-Host ""
     Write-Host $CHANGELOG -F Green
@@ -127,8 +127,32 @@ try {
     $cnt += Copy-Safe "$SRC\antigravity\workflows" "$TGT\antigravity\workflows" $true
 
     if ($cnt -gt 0) {
-        Log-H "ISLEM BASARILI! (v2.5.1)"
-        Write-Host "`n1. Antigravity IDE -> Refresh Rules" -F Cyan
+        Log-H "ISLEM BASARILI! (v2.6.0)"
+        Write-Host ""
+        
+        # --- FEATURE: Auto-Launch IDE ---
+        Log-I "Antigravity IDE Baslatiliyor..."
+        try {
+            if (Get-Command "code" -ErrorAction SilentlyContinue) {
+                Start-Process "code" -ArgumentList "`"$ROOT`"" -WindowStyle Hidden
+                Log-S "IDE Acildi"
+            }
+            else { Log-W "'code' komutu bulunamadi, IDE'yi elle aciniz." }
+        }
+        catch { Log-W "IDE otomatik acilamadi." }
+
+        # --- FEATURE: Force Refresh Prompt ---
+        Write-Host "`n   ⚠️  DIKKAT GEREKLI  ⚠️" -F Red -Back White
+        Write-Host "   Kurallar guncellendi. IDE icinde EN AZ BIR KEZ" -F Yellow
+        Write-Host "   'Refresh Rules' butonuna basmak veya IDE'yi yeniden baslatmak ZORUNLUDUR." -F Yellow
+        
+        # Popup Message (Blocking)
+        try {
+            $ws = New-Object -ComObject WScript.Shell
+            $btn = $ws.Popup("Guncelleme Tamamlandi!`n`nLutfen Antigravity IDE icinde 'Refresh Rules' calistirdiginizdan emin olun.", 0, "Antigravity Hatirlatici", 64)
+        }
+        catch {} ## Fail silently on non-interactive
+        
     }
     else { Log-E "Hata!" }
 
