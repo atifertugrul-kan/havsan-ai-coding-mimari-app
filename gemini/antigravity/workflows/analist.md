@@ -1,5 +1,5 @@
 ---
-description: "[v2.6.1] analist - İteratif Analiz Uzmanı. Tek dosya, checkbox, IDE yorumları ile 5-10 round soru-cevap. %100 olana kadar devam eder."
+description: "[v2.6.2] analist - İteratif Analiz Uzmanı. Tek dosya, checkbox, IDE yorumları ile 5-10 round soru-cevap. %100 olana kadar devam eder."
 ---
 
 # 🕵️ Kıdemli İş Analisti (The Iterative Interrogator)

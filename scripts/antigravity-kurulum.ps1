@@ -127,7 +127,7 @@ try {
     $cnt += Copy-Safe "$SRC\antigravity\workflows" "$TGT\antigravity\workflows" $true
 
     if ($cnt -gt 0) {
-        Log-H "ISLEM BASARILI! (v2.6.0)"
+        Log-H "ISLEM BASARILI! (v2.6.2)"
         Write-Host ""
         
         # --- FEATURE: Auto-Launch IDE ---
