@@ -1,16 +1,29 @@
+```text
+  _   _    _ __     __ ___    _    _   _ 
+ | | | |  / \\ \   / // __|  / \  | \ | |
+ | |_| | / _ \\ \ / / \__ \ / _ \ |  \| |
+ |  _  |/ ___ \\ V /  |___// ___ \| |\  |
+ |_| |_/_/   \_\\_/   |___/_/   \_\_| \_|
+                                         
+      Robotik & Yapay Zeka
+```
+
 # 🚀 HAVSAN Antigravity
 
-**Versiyon:** 2.0.0 (Unified & Simplified)
+**Versiyon:** 2.0.1 (Fixes)
 **Amaç:** HAVSAN Yapay Zeka & Robotik ekibi için standart geliştirme ortamı.
 
 ---
 
 ## ⚡ 10 Saniyede Kurulum & Güncelleme
 
-**Tek Adım:** 
-`scripts/antigravity-kurulum.ps1` dosyasına **Sağ Tık -> Run with PowerShell**
+### İlk Kurulum
+1. `scripts/antigravity-kurulum.ps1` dosyasına **Sağ Tık -> Run with PowerShell**
 
-*(Bu işlem önce projeyi Git'ten çeker, sonra kuralları yükler)*
+### Atıf Yeni Kural Eklediğinde? (Güncelleme)
+1. IDE'den **Git Pull** yap (veya `git pull` yaz).
+2. `scripts/antigravity-kurulum.ps1` çalıştır.
+3. Bitti! ✅
 
 ---
 
@@ -26,12 +39,9 @@ graph TD
     Init --> Loop{İteratif Sorular}
     Loop -- Hayır --> Q[Cevapla]
     Q --> Loop
-    Loop -- Evet --> PRD[gereksinim_analizi.md]
+    Loop -- Evet --> PRD[gereksinim_analizi.md<br/>(Tek Kaynak - Kopyalamak YASAK)]
     
-    note right of PRD
-        Tek Kaynak
-        (Kopyalamak YASAK)
-    end
+    style PRD fill:#f9f,stroke:#333,stroke-width:2px
 ```
 
 ### Faz 2: Frontend (Dummy Data)
