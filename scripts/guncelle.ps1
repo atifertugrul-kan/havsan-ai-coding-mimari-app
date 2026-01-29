@@ -149,4 +149,7 @@ Write-Host "  3. 'Refresh Rules' ve 'Refresh Workflows' seceneklerine tikla" -Fo
 
 Write-Host "`n===============================================`n" -ForegroundColor Magenta
 
+Write-Host "`nCikis icin ENTER tusuna basin..." -ForegroundColor Yellow
+$null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+
 exit 0
