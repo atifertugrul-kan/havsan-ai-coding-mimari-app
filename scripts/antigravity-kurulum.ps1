@@ -33,7 +33,7 @@ try {
  |_| |_/_/   \_\\_/   |___/_/   \_\_| \_|
                                          
       Robotik & Yapay Zeka
-      v2.1.7 (Compact)
+      v2.1.8 (Pause Fix)
 '@ -F Cyan
     Write-Host "    Atif Ertugrul Kan`n    Kurumsal Gelistirici Altyapi Mimari & HAVSAN CTO`n" -F Yellow
     Log-H "HAVSAN Antigravity Kurulum"
@@ -101,4 +101,4 @@ catch {
     Write-Host "[ERROR] $($_.ScriptStackTrace)" -F Red
 }
 
-Write-Host "`nCikis icin ENTER..." -F Yellow; $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+Write-Host "`nCikis icin ENTER..." -F Yellow; Read-Host
