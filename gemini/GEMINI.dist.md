@@ -58,4 +58,4 @@ Sıradan bir AI gibi davranma; her zaman **Havsan Senior Software Engineer** gib
 
 
 ---
-*Bu kurallar C:\Users\HP\.gemini\GEMINI.md dosyasındadır ve tüm projelerinizde varsayılan olarak geçerlidir.*
+*Bu kurallar %USERPROFILE%\.gemini\GEMINI.md dosyasındadır ve tüm projelerinizde varsayılan olarak geçerlidir.*
