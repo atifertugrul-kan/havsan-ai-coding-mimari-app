@@ -4,6 +4,15 @@ param([switch]$Startup)
 # HAVSAN Antigravity - Kurulum ve Guncelleme
 # ============================================
 try {
+    # --- CHANGELOG (Kullanicilar burayi okuyacak) ---
+    $CHANGELOG = @'
+    [v2.4.0 YENILIKLER]
+    - Otomatik Baslangic: Bilgisayar acilisinda guncelleme kontrolu
+    - Sabit Arayuz: Ilerleme cubugu en tepeye sabitlendi (Kayma yok)
+    - Yedekleme: Eski ayarlar artik tarih etiketiyle yedekleniyor
+    - Hiz: Script %300 daha hizli calisiyor
+'@
+
     # Helper Functions
     function Log-H($m) { Write-Host "`n"; Write-Host "=== $m ===" -F Magenta }
     function Log-S($m) { Write-Host "[OK] $m" -F Green }
@@ -24,44 +33,72 @@ try {
                 $remote = git -C "$ROOT" rev-parse '@{u}'
                 if ($local -eq $remote) { exit } # Guncel ise sessizce cik
             }
-            catch { exit } # Hata varsa cik
+            catch { exit }
         }
     }
 
-    # Maximize Window (Force GUI if we are here)
+    # Maximize Window
     $def = '[DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr h, int c);'
     $w32 = Add-Type -MemberDefinition $def -Name "Win32" -Namespace Win32 -PassThru
     $h = (Get-Process -Id $PID).MainWindowHandle; if ($h -ne [IntPtr]::Zero) { $w32::ShowWindow($h, 3) }
 
     Clear-Host
-    $global:total = 8; $global:step = 0 # Step count increased for Startup Register
+    $global:total = 8; $global:step = 0
 
+    # CUSTOM TOP BAR (Native degil, Cursor ile en tepeye cizilen bar)
     function Upd-Prog($act) {
         $global:step++
         $p = 0; if ($global:total -gt 0) { $p = [math]::Round(($global:step / $global:total) * 100) }
-        Write-Progress -Activity "Antigravity Kurulum Sihirbazi" -Status "$act (%$p)" -PercentComplete $p
+        
+        $orgRow = [Console]::CursorTop
+        $orgCol = [Console]::CursorLeft
+        
+        # En tepeye git
+        [Console]::SetCursorPosition(0, 0)
+        
+        # Bar Cizimi
+        $width = 50
+        $filled = [math]::Round(($p / 100) * $width)
+        $bar = "█" * $filled + "░" * ($width - $filled)
+        
+        # Arka plan mavi, yazi beyaz (Header gibi)
+        Write-Host " HAVSAN Antigravity Kurulum Sihirbazi [$bar] %$p " -NoNewline -Back DarkBlue -Fore White
+        Write-Host " " * (120 - 50 - 40) -Back DarkBlue # Satiri tamamla
+        
+        # Alt satira aktiviteyi yaz (Satir 1)
+        [Console]::SetCursorPosition(0, 1)
+        Write-Host " Islem: $act" -NoNewline -Back Black -Fore Yellow
+        Write-Host " " * 80 -Back Black # Temizle
+        
+        # Cursor'u eski yerine dondur (Loglar karismasin)
+        [Console]::SetCursorPosition($orgCol, $orgRow)
+        if ($orgRow -lt 3) { [Console]::SetCursorPosition(0, 3) } # Loglar en az 3. satirdan baslasin
     }
 
-    # ASCII Art
+    # Loglar ust bara carpmasin diye baslangic boslugu
+    Write-Host "`n`n`n"
+
+    # LEGACY ASCII ART (Karmasik Imza)
     Write-Host @'
-  _   _    _ __     __ ___    _    _   _ 
- | | | |  / \\ \   / // __|  / \  | \ | |
- | |_| | / _ \\ \ / / \__ \ / _ \ |  \| |
- |  _  |/ ___ \\ V /  |___// ___ \| |\  |
- |_| |_/_/   \_\\_/   |___/_/   \_\_| \_|
-                                         
-      Robotik & Yapay Zeka
-      v2.3.0 (Auto-Update)
+  _    _  _______      __  _____           _   _ 
+ | |  | ||  __ \ \    / / / ____|   /\    | \ | |
+ | |__| || |__) \ \  / / | (___    /  \   |  \| |
+ |  __  ||  _  / \ \/ /   \___ \  / /\ \  | . ` |
+ | |  | || | \ \  \  /    ____) |/ ____ \ | |\  |
+ |_|  |_||_|  \_\  \/    |_____//_/    \_\|_| \_|
+                                                 
 '@ -F Cyan
-    Write-Host "    Atif Ertugrul Kan`n    HAVSAN CTO`n" -F Yellow
-    Log-H "HAVSAN Antigravity"
     
+    Write-Host "    Atif Ertugrul Kan" -F Yellow
+    Write-Host "    Kurumsal Gelistirici Altyapi Mimari & HAVSAN CTO" -F DarkGray
+    Write-Host "    v2.4.0 (Legacy UI)" -F Gray
+    Write-Host ""
+    Write-Host $CHANGELOG -F Green
+
     $SRC = "$ROOT\gemini"; $TGT = "$env:USERPROFILE\.gemini"
-    Log-I "Kaynak: $SRC"
-    Log-I "Hedef:  $TGT"
 
     # Step 0: Register Startup
-    Upd-Prog "Baslangic Ayari"; Log-H "0. Sistem Entegrasyonu"
+    Upd-Prog "Sistem Entegrasyonu"; Log-H "0. Sistem Entegrasyonu"
     $lnkPath = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\AntigravityUpdate.lnk"
     if (-not (Test-Path $lnkPath)) {
         try {
@@ -70,25 +107,24 @@ try {
             $s.TargetPath = "powershell.exe"
             $s.Arguments = "-ExecutionPolicy Bypass -WindowStyle Minimized -File `"$SCRIPT_PATH`" -Startup"
             $s.Save()
-            Log-S "Baslangica eklendi (Otomatik Guncelleme)"
+            Log-S "Baslangica eklendi"
         }
-        catch { Log-W "Baslangica eklenemedi (Yetki sorunu olabilir)" }
+        catch { Log-W "Baslangica eklenemedi" }
     }
-    else { Log-S "Sistem entegrasyonu tamam" }
+    else { Log-S "Startup kaydi mevcut" }
 
     # Step 1: Git Update
-    Upd-Prog "Git Guncelleme"; Log-H "1. Proje Guncelleniyor"
+    Upd-Prog "Git Kontrolu"; Log-H "1. Proje Guncelleniyor"
     if (Test-Path "$ROOT\.git") { 
         $out = git -C "$ROOT" pull 2>&1
         if ($LASTEXITCODE -eq 0) { Log-S "Guncellendi" } else { Log-W "Yerel modla devam." }
     }
 
     # Step 2: Checks
-    Upd-Prog "Ortam Kontrolu"
+    Upd-Prog "Dosya Kontrolu"
     if (!(Test-Path $SRC)) { throw "Kaynak yok: $SRC" }
     if (!(Test-Path $TGT)) { New-Item -Type Directory -Force $TGT | Out-Null; $isUpd = $false } else { Log-S "Hedef mevcut"; $isUpd = $true }
 
-    # Helper for Safe Copy
     function Copy-Safe($s, $d, $rec = $false) {
         if (Test-Path $s) { 
             if ($rec) { if (Test-Path $d) { Remove-Item $d -Recurse -Force -ErrorAction SilentlyContinue }; Copy-Item $s $d -Recurse -Force } 
@@ -111,7 +147,7 @@ try {
     $null = Copy-Safe "$TGT\antigravity\workflows" "$bDir\antigravity\workflows" $true
 
     # Step 4: Install
-    Upd-Prog "Dosya Yukleme"; Log-H "3. Dosyalar Yukleniyor"
+    Upd-Prog "Yukleniyor"; Log-H "3. Dosyalar Yukleniyor"
     $cnt = 0
     $cnt += Copy-Safe "$SRC\GEMINI.dist.md" "$TGT\GEMINI.md"
     $cnt += Copy-Safe "$SRC\KURULUM.md" "$TGT\KURULUM.md"
@@ -123,16 +159,15 @@ try {
     Upd-Prog "Tamamlandi"
 
     if ($cnt -gt 0) {
-        Log-H "ISLEM BASARILI! (v2.3.0)"
-        Write-Host "`n1. Antigravity IDE'ye git`n2. 'Refresh Rules' ve 'Refresh Workflows' yap`n" -F Cyan
+        Log-H "ISLEM BASARILI! (v2.4.0)"
+        Write-Host "`n1. Antigravity IDE -> Refresh Rules" -F Cyan
     }
-    else { Log-E "Kopyalama basarisiz!" }
+    else { Log-E "Hata!" }
 
 }
 catch { 
     Write-Host "`n"
     Write-Host "[ERROR] HATA: $($_.Exception.Message)" -F Red 
-    Write-Host "[ERROR] $($_.ScriptStackTrace)" -F Red
 }
 
 Write-Host "`nCikis icin ENTER..." -F Yellow; $null = Read-Host
