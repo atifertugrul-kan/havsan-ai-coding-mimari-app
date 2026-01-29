@@ -12,13 +12,12 @@ try {
     function Write-Info { param([string]$msg) Write-Host "[INFO] $msg" -ForegroundColor Cyan }
     function Write-Warning { param([string]$msg) Write-Host "[WARN] $msg" -ForegroundColor Yellow }
     function Write-Error { param([string]$msg) Write-Host "[ERROR] $msg" -ForegroundColor Red }
+    function Write-Debug { param([string]$msg) Write-Host "[DEBUG] $msg" -ForegroundColor DarkGray }
 
     Clear-Host
     Write-Header "HAVSAN Antigravity Kurulum Sihirbazi"
 
     # Dizinleri Belirleme
-    # PSScriptRoot: Scriptin bulundugu klasor (C:\...\scripts)
-    # Split-Path -Parent: Bir ust klasor (C:\...\havsan-ai-coding-mimari-app)
     $SCRIPT_DIR = $PSScriptRoot
     $PROJECT_ROOT = Split-Path -Parent $SCRIPT_DIR
     $SOURCE_DIR = "$PROJECT_ROOT\gemini"
@@ -53,14 +52,19 @@ try {
 
     $timestamp = Get-Date -Format 'yyyy-MM-dd_HH-mm-ss'
     $BACKUP_DIR = "$TARGET_DIR\backups\kurulum_oncesi_$timestamp"
+    
+    Write-Debug "Yedek klasoru olusturuluyor: $BACKUP_DIR"
     New-Item -ItemType Directory -Force -Path $BACKUP_DIR | Out-Null
 
     if (Test-Path "$TARGET_DIR\GEMINI.md") { 
-        Copy-Item "$TARGET_DIR\GEMINI.md" "$BACKUP_DIR\GEMINI.md" -Force 
+        Write-Debug "GEMINI.md yedekleniyor..."
+        Copy-Item "$TARGET_DIR\GEMINI.md" "$BACKUP_DIR\GEMINI.md" -Force -Confirm:$false
         Write-Success "Eski GEMINI.md yedeklendi"
     }
+
     if (Test-Path "$TARGET_DIR\antigravity") { 
-        Copy-Item "$TARGET_DIR\antigravity" "$BACKUP_DIR\antigravity" -Recurse -Force 
+        Write-Debug "antigravity klasoru yedekleniyor..."
+        Copy-Item "$TARGET_DIR\antigravity" "$BACKUP_DIR\antigravity" -Recurse -Force -Confirm:$false
         Write-Success "Eski antigravity klasoru yedeklendi"
     }
 
@@ -73,8 +77,9 @@ try {
 
     # GEMINI.dist.md -> GEMINI.md
     $distFile = "$SOURCE_DIR\GEMINI.dist.md"
+    Write-Debug "Global kurallar kopyalaniyor: $distFile"
     if (Test-Path $distFile) {
-        Copy-Item $distFile "$TARGET_DIR\GEMINI.md" -Force
+        Copy-Item $distFile "$TARGET_DIR\GEMINI.md" -Force -Confirm:$false
         Write-Success "Global Kurallar (GEMINI.md) yuklendi"
         $filesCopied++
     }
@@ -84,8 +89,9 @@ try {
 
     # KURULUM.md
     $kurulumFile = "$SOURCE_DIR\KURULUM.md"
+    Write-Debug "Kurulum rehberi kopyalaniyor: $kurulumFile"
     if (Test-Path $kurulumFile) {
-        Copy-Item $kurulumFile "$TARGET_DIR\KURULUM.md" -Force
+        Copy-Item $kurulumFile "$TARGET_DIR\KURULUM.md" -Force -Confirm:$false
         Write-Success "Kurulum Rehberi yuklendi"
         $filesCopied++
     }
@@ -101,8 +107,14 @@ try {
         # Skills
         if (Test-Path "$antigravitySource\skills") {
             $skillsTarget = "$antigravityTarget\skills"
-            if (Test-Path $skillsTarget) { Remove-Item $skillsTarget -Recurse -Force }
-            Copy-Item "$antigravitySource\skills" $skillsTarget -Recurse -Force
+            Write-Debug "Skills guncelleniyor..."
+            
+            # Klasor yoksa olustur
+            if (-not (Test-Path "$antigravityTarget")) { New-Item -ItemType Directory -Path "$antigravityTarget" -Force | Out-Null }
+            
+            # Skills temizle ve kopyala
+            if (Test-Path $skillsTarget) { Remove-Item $skillsTarget -Recurse -Force -Confirm:$false }
+            Copy-Item "$antigravitySource\skills" $skillsTarget -Recurse -Force -Confirm:$false
             Write-Success "Skills yuklendi"
             $filesCopied++
         }
@@ -110,8 +122,14 @@ try {
         # Workflows
         if (Test-Path "$antigravitySource\workflows") {
             $workflowsTarget = "$antigravityTarget\workflows"
-            if (Test-Path $workflowsTarget) { Remove-Item $workflowsTarget -Recurse -Force }
-            Copy-Item "$antigravitySource\workflows" $workflowsTarget -Recurse -Force
+            Write-Debug "Workflows guncelleniyor..."
+            
+            # Klasor yoksa olustur
+            if (-not (Test-Path "$antigravityTarget")) { New-Item -ItemType Directory -Path "$antigravityTarget" -Force | Out-Null }
+            
+            # Workflows temizle ve kopyala
+            if (Test-Path $workflowsTarget) { Remove-Item $workflowsTarget -Recurse -Force -Confirm:$false }
+            Copy-Item "$antigravitySource\workflows" $workflowsTarget -Recurse -Force -Confirm:$false
             Write-Success "Workflows yuklendi"
             $filesCopied++
         }
