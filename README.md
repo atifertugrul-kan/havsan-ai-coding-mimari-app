@@ -9,12 +9,12 @@
 
 ```
 gemini/                         # Dağıtım Paketi
-├── GEMINI.md                   # Global Rules
-├── KURULUM.md                  # Kurulum + Proje Başlatma
 └── antigravity/
     ├── skills/                 # 3 özel yetenek
     └── workflows/              # 3 iş akışı
 ```
+
+**Not:** `GEMINI.md` ve `KURULUM.md` dosyaları **global** olarak `C:\Users\<USERNAME>\.gemini\` altında bulunur.
 
 ---
 
@@ -22,17 +22,22 @@ gemini/                         # Dağıtım Paketi
 
 ### Ekip Üyesi
 
-1. `gemini` klasörünün **içeriğini** kopyala
-2. `C:\Users\<KULLANICI_ADIN>\.gemini\` altına yapıştır
+1. `gemini/antigravity/` klasörünü kopyala
+2. `C:\Users\<KULLANICI_ADIN>\.gemini\antigravity\` altına yapıştır
 3. Antigravity IDE'yi yeniden başlat
 
-**Detay:** `gemini/KURULUM.md`
+**Global Dosyalar:** `GEMINI.md` ve `KURULUM.md` Atıf tarafından paylaşılır.
 
 ### Atıf (Yönetici)
 
+**Konfigürasyon Güncelleme:**
 ```powershell
-# Değişiklik sonrası
-.\scripts\sync-from-antigravity.ps1 -AutoCommit
+# 1. C:\Users\HP\.gemini\ altındaki dosyaları düzenle
+# 2. Hızlı güncelleme
+.\scripts\guncelle.ps1
+# 3. Git commit
+git add .
+git commit -m "feat: Update configurations"
 git push
 ```
 
@@ -49,6 +54,12 @@ git push
 5. **Güvenli Otonom Çalışma** (kritik işlemlerde onay)
 6. **Teknoloji Hiyerarşisi** (Google → HAVSAN Cloud → Open Source)
 7. **Proje Hafızası** (`.agent/rules/`)
+
+### Git Kontrol (ZORUNLU)
+
+- ❌ `git commit` - SafeToAutoRun: **false** (ONAY GEREKLİ)
+- ❌ `git push` - SafeToAutoRun: **false** (ONAY GEREKLİ)
+- ✅ `git status/diff/log` - Serbest
 
 ### Skills
 
@@ -167,17 +178,33 @@ proje-adi/
 
 | Script | Amaç |
 |--------|------|
-| `sync-to-antigravity.ps1` | Proje → Antigravity |
-| `sync-from-antigravity.ps1` | Antigravity → Proje |
-| `validate-config.ps1` | Doğrulama |
-| `install-team.ps1` | Ekip kurulumu |
+| `guncelle.ps1` | Proje → .gemini otomatik senkronizasyon |
+
+**Kullanım:**
+```powershell
+.\scripts\guncelle.ps1
+```
+
+---
+
+## ⚙️ IDE Ayarları (ÖNEMLİ)
+
+Git kontrol kurallarının çalışması için IDE ayarlarını değiştir:
+
+### Antigravity IDE → Settings
+
+1. **Auto Execution:** `Always Proceed` → `Ask`
+2. **Review Policy:** `Always Proceed` → `Ask`
+
+Bu ayarlar, IDE'nin Git commit/push için **mutlaka onay istemesini** sağlar.
 
 ---
 
 ## 📚 Dokümantasyon
 
-- **[gemini/KURULUM.md](gemini/KURULUM.md)** - Kurulum + Proje Başlatma
-- **[CHANGELOG.md](CHANGELOG.md)** - Versiyon geçmişi
+- **[C:\Users\HP\.gemini\GEMINI.md](file:///C:/Users/HP/.gemini/GEMINI.md)** - Global Rules
+- **[C:\Users\HP\.gemini\KURULUM.md](file:///C:/Users/HP/.gemini/KURULUM.md)** - Kurulum + Proje Başlatma
+- **[scripts/README.md](scripts/README.md)** - Script kullanım rehberi
 
 ---
 
