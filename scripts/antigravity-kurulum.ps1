@@ -53,15 +53,20 @@ try {
                                          
 '@ -F Cyan
 
+    Write-Host ""
     Write-Host "    Atif Ertugrul Kan" -F Yellow
     Write-Host "    Kurumsal Gelistirici Altyapi Mimari & HAVSAN CTO" -F DarkGray
-    Write-Host "    v2.5.0 (Final UI)" -F Gray
+    Write-Host "    v2.5.1 (Spacing Fix)" -F Gray
+    Write-Host ""
     Write-Host ""
     Write-Host $CHANGELOG -F Green
+    Write-Host ""
+    Write-Host ""
 
     $SRC = "$ROOT\gemini"; $TGT = "$env:USERPROFILE\.gemini"
     Log-I "Kaynak: $SRC"
     Log-I "Hedef:  $TGT"
+    Write-Host ""
 
     # Step 0: Register Startup
     Log-H "0. Sistem Entegrasyonu"
