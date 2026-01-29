@@ -129,36 +129,58 @@ try {
         else { Log-I "Startup kisayolu mevcut." }
     }
     catch { Log-W "Startup kaydedilemedi." }
-    # Step 1: Smart Git Sync (Atif vs Others)
-    Log-H "1. Proje Guncelleniyor (Akilli Senkronizasyon)"
+    # Step 1: Self-Update (Pull Project First)
+    Log-H "1. Proje Guncelleniyor (Kendi Guncellemesi)"
     if (Test-Path "$ROOT\.git") {
-        $git_user = git -C "$ROOT" config user.name
-        
-        # IDENTIFY USER: ATIF (Admin) vs Developer
-        if ($git_user -match "atif" -or $git_user -match "Atif") { 
-            Log-I "Yonetici Modu Tespiti: $git_user (PUSH Modu)"
+        try {
+            # Check for updates BEFORE doing anything
+            git -C "$ROOT" fetch -q 2>&1 | Out-Null
+            $local = git -C "$ROOT" rev-parse HEAD
+            $remote = git -C "$ROOT" rev-parse '@{u}'
             
-            # Sync First (Pull)
-            Log-I "Once guncel versiyon cekiliyor..."
-            git -C "$ROOT" pull 2>&1 | Out-Null
-            
-            # Check for Changes
-            if (git -C "$ROOT" status --porcelain) {
-                Log-I "Yerel degisiklikler tespit edildi, gonderiliyor..."
-                git -C "$ROOT" add .
-                git -C "$ROOT" commit -m "auto: Rules Update by Admin ($git_user)"
-                git -C "$ROOT" push origin main
-                Log-S "Kurallar Git'e PUSH edildi."
+            if ($local -ne $remote) {
+                Log-I "Yeni versiyon tespit edildi, indiriliyor..."
+                
+                # Determine user role
+                $git_user = git -C "$ROOT" config user.name
+                
+                if ($git_user -match "atif" -or $git_user -match "Atif") {
+                    # ATIF: Pull first, then push local changes
+                    Log-I "Yonetici Modu: Guncellemeler cekiliyor..."
+                    git -C "$ROOT" pull origin main 2>&1 | Out-Null
+                    
+                    if (git -C "$ROOT" status --porcelain) {
+                        Log-I "Yerel degisiklikler tespit edildi, gonderiliyor..."
+                        git -C "$ROOT" add .
+                        git -C "$ROOT" commit -m "auto: Rules Update by Admin ($git_user)"
+                        git -C "$ROOT" push origin main
+                        Log-S "Kurallar Git'e PUSH edildi."
+                    }
+                }
+                else {
+                    # DEVELOPER: Just pull
+                    Log-I "Gelistirici Modu: Guncellemeler cekiliyor..."
+                    git -C "$ROOT" pull origin main 2>&1 | Out-Null
+                }
+                
+                Log-S "Proje guncellendi. Script yeniden baslatiliyor..."
+                Write-Host ""
+                Start-Sleep -Seconds 2
+                
+                # Restart script with updated version
+                Start-Process -FilePath "powershell.exe" -ArgumentList "-ExecutionPolicy Bypass -NoProfile -File `"$SCRIPT_PATH`"" -WindowStyle Normal
+                exit 0
             }
             else {
-                Log-S "Gonderilecek degisiklik yok."
+                Log-S "Proje zaten guncel."
             }
         }
-        else {
-            Log-I "Gelistirici Modu: $git_user (PULL Modu)"
-            $out = git -C "$ROOT" pull 2>&1
-            if ($LASTEXITCODE -eq 0) { Log-S "Kurallar Guncellendi" } else { Log-W "Yerel modla devam." }
+        catch {
+            Log-W "Git guncelleme hatasi: $($_.Exception.Message)"
         }
+    }
+    else {
+        Log-W "Git deposu bulunamadi, yerel modda devam ediliyor."
     }
 
     # Step 2: Checks
