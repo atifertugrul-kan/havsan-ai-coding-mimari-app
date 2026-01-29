@@ -5,12 +5,15 @@
 
 ---
 
-## ⚡ 10 Saniyede Kurulum
+## ⚡ 10 Saniyede Kurulum & Güncelleme
 
-**Tek Adım:** 
-`scripts/antigravity-kurulum.ps1` dosyasına **Sağ Tık -> Run with PowerShell**
+### İlk Kurulum
+1. `scripts/antigravity-kurulum.ps1` dosyasına **Sağ Tık -> Run with PowerShell**
 
-*(Bu işlem tüm kuralları yükler ve günceller)*
+### Atıf Yeni Kural Eklediğinde? (Güncelleme)
+1. IDE'den **Git Pull** yap (veya `git pull` yaz).
+2. `scripts/antigravity-kurulum.ps1` çalıştır.
+3. Bitti! ✅
 
 ---
 
