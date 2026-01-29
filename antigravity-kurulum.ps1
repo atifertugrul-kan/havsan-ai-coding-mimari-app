@@ -9,19 +9,54 @@ try {
 
     # --- CHANGELOG ---
     $CHANGELOG = @'
-    [v2.6.5 YENILIKLER]
+    [v2.6.6 YENILIKLER]
     - Fix: "Antigravity IDE" kisayolu ile dogru baslatma
     - Fix: Konsol karakter kodlamasi (UTF-8) ve Emojiler duzeltildi
+    - Fix: Popup TopMost (IDE ustunde kalir)
     - Branding: Gorsel butunluk saglandi
     - Otomasyon: Akilli Senkronizasyon (Admin Push / Dev Pull)
 '@
 
     # Helper Functions
-    function Log-H($m) { Write-Host "`n=== $m ===" -F Magenta }
-    function Log-S($m) { Write-Host "[OK] $m" -F Green }
-    function Log-I($m) { Write-Host "[INFO] $m" -F Cyan }
-    function Log-W($m) { Write-Host "[WARN] $m" -F Yellow }
-    function Log-E($m) { Write-Host "[ERROR] $m" -F Red }
+    function Log-H($t) { Write-Host "`n=== $t ===" -F Magenta }
+    function Log-S($t) { Write-Host "[OK] $t" -F Green }
+    function Log-I($t) { Write-Host "[INFO] $t" -F Cyan }
+    function Log-W($t) { Write-Host "[WARN] $t" -F Yellow }
+    function Log-E($t) { Write-Host "[ERROR] $t" -F Red }
+
+    # --- STARTUP: Wait for Internet Connection ---
+    $isStartup = $env:ANTIGRAVITY_STARTUP -eq "1"
+    
+    if ($isStartup) {
+        Write-Host "[INFO] Sistem acilisi tespit edildi. Internet baglantisi bekleniyor..." -F Cyan
+        Start-Sleep -Seconds 30
+        
+        # Check internet connectivity
+        $maxRetries = 6
+        $retryCount = 0
+        $connected = $false
+        
+        while (-not $connected -and $retryCount -lt $maxRetries) {
+            try {
+                $null = Test-Connection -ComputerName "8.8.8.8" -Count 1 -Quiet -ErrorAction Stop
+                $connected = $true
+                Write-Host "[OK] Internet baglantisi tespit edildi." -F Green
+            }
+            catch {
+                $retryCount++
+                if ($retryCount -lt $maxRetries) {
+                    Write-Host "[WARN] Internet baglantisi yok. Tekrar deneniyor... ($retryCount/$maxRetries)" -F Yellow
+                    Start-Sleep -Seconds 10
+                }
+            }
+        }
+        
+        if (-not $connected) {
+            Write-Host "[ERROR] Internet baglantisi kurulamadi. Script sonlandiriliyor." -F Red
+            Start-Sleep -Seconds 3
+            exit 0
+        }
+    }
 
     # Paths
     $SCRIPT_PATH = $MyInvocation.MyCommand.Definition
@@ -60,7 +95,7 @@ try {
     Write-Host ""
     Write-Host "    Atif Ertugrul Kan" -F Yellow
     Write-Host "    Kurumsal Gelistirici Altyapi Mimari & HAVSAN CTO" -F DarkGray
-    Write-Host "    v2.6.5 (Clean & Stable)" -F Gray
+    Write-Host "    v2.6.6 (Stable)" -F Gray
     Write-Host ""
     Write-Host ""
     Write-Host $CHANGELOG -F Green
@@ -73,20 +108,23 @@ try {
 
     # Step 0: Register Startup
     Log-H "0. Sistem Entegrasyonu"
-    $lnkPath = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\AntigravityUpdate.lnk"
-    if (-not (Test-Path $lnkPath)) {
-        try {
+    try {
+        $startupPath = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
+        $shortcutPath = "$startupPath\Antigravity-Startup.lnk"
+        
+        if (-not (Test-Path $shortcutPath)) {
             $ws = New-Object -ComObject WScript.Shell
-            $s = $ws.CreateShortcut($lnkPath)
-            $s.TargetPath = "powershell.exe"
-            $s.Arguments = "-ExecutionPolicy Bypass -WindowStyle Minimized -File `"$SCRIPT_PATH`" -Startup"
-            $s.Save()
-            Log-S "Baslangica eklendi"
+            $sc = $ws.CreateShortcut($shortcutPath)
+            $sc.TargetPath = "powershell.exe"
+            $sc.Arguments = "-ExecutionPolicy Bypass -WindowStyle Hidden -Command `"& { `$env:ANTIGRAVITY_STARTUP='1'; & '$ROOT\antigravity-kurulum.ps1' }`""
+            $sc.WorkingDirectory = $ROOT
+            $sc.Description = "HAVSAN Antigravity Auto-Update"
+            $sc.Save()
+            Log-S "Startup kisayolu olusturuldu."
         }
-        catch { Log-W "Baslangica eklenemedi" }
+        else { Log-I "Startup kisayolu mevcut." }
     }
-    else { Log-S "Startup kaydi mevcut" }
-
+    catch { Log-W "Startup kaydedilemedi." }
     # Step 1: Smart Git Sync (Atif vs Others)
     Log-H "1. Proje Guncelleniyor (Akilli Senkronizasyon)"
     if (Test-Path "$ROOT\.git") {
@@ -155,7 +193,7 @@ try {
     $cnt += Copy-Safe "$SRC\antigravity\workflows" "$TGT\antigravity\workflows" $true
 
     if ($cnt -gt 0) {
-        Log-H "ISLEM BASARILI! (v2.6.5)"
+        Log-H "ISLEM BASARILI! (v2.6.6)"
         Write-Host ""
         
         # --- FEATURE: Auto-Launch IDE (Antigravity Shortcut) ---
