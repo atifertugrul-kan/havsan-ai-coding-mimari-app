@@ -88,6 +88,11 @@ graph TD
         Loop -- Hayır --> Q[Soruları Cevapla]
         Q --> Loop
         Loop -- Evet --> PRD[gereksinim_analizi.md]
+        
+        note right of PRD
+            Tek Doğruluk Kaynağı
+            (Kopyalanmaz, Referans Verilir)
+        end
     end
 
     %% Faz 2: Frontend
