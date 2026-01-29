@@ -48,7 +48,10 @@ try {
         $bar = "|" * $filled + " " * $empty
         
         # Satir ici guncelleme (Carriage Return `r)
-        Write-Host -NoNewline "`r[$bar] $percent% - $activity                               "
+        # Metni 120 karaktere tamamlayarak (PadRight) eski yazilari temizle
+        $msg = "`r[$bar] $percent% - $activity"
+        $paddedMsg = $msg.PadRight(120, " ")
+        Write-Host -NoNewline $paddedMsg
         
         # Eger %100 ise yeni satira gec
         if ($percent -ge 100) { Write-Host "" }
@@ -63,7 +66,7 @@ try {
  |_| |_/_/   \_\\_/   |___/_/   \_\_| \_|
                                          
       Robotik & Yapay Zeka
-      v2.1.4 (CLI Bar)
+      v2.1.5 (Clean Bar)
     
 '@
     Write-Host $logo -ForegroundColor Cyan
