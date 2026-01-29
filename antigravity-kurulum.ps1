@@ -69,6 +69,7 @@ try {
     Log-I "Kaynak: $SRC"
     Log-I "Hedef:  $TGT"
     Write-Host ""
+    Write-Host ""
 
     # Step 0: Register Startup
     Log-H "0. Sistem Entegrasyonu"
@@ -180,15 +181,25 @@ try {
         Write-Host "   'Refresh Rules' butonuna basmak veya IDE'yi yeniden baslatmak ZORUNLUDUR." -F Yellow
         Write-Host ""
         
-        # Popup Message (Blocking)
+        # Popup Message (Blocking - TopMost)
         try {
             Add-Type -AssemblyName System.Windows.Forms
+            $popup = New-Object System.Windows.Forms.Form
+            $popup.TopMost = $true
+            $popup.StartPosition = 'CenterScreen'
+            $popup.FormBorderStyle = 'None'
+            $popup.Opacity = 0
+            $popup.Show()
+            
             [System.Windows.Forms.MessageBox]::Show(
+                $popup,
                 "Guncelleme Tamamlandi!`n`nLutfen Antigravity IDE icinde 'Refresh Rules' calistirdiginizdan emin olun.",
                 "Antigravity Hatirlatici",
                 [System.Windows.Forms.MessageBoxButtons]::OK,
                 [System.Windows.Forms.MessageBoxIcon]::Information
             ) | Out-Null
+            
+            $popup.Close()
         }
         catch {
             # Fallback to WScript.Shell if Windows.Forms fails

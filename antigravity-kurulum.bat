@@ -2,8 +2,8 @@
 chcp 65001 >nul 2>&1
 setlocal enabledelayedexpansion
 
-REM Maximize Window
-mode con cols=120 lines=40
+REM Maximize Window (Full Screen)
+mode con cols=200 lines=50
 
 REM ============================================
 REM HAVSAN Antigravity - Kurulum Wrapper
