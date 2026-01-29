@@ -101,6 +101,9 @@ try {
     Write-Host ""
     Write-Host $CHANGELOG -F Green
 
+    Write-Host ""
+    Write-Host ""
+    
     $SRC = "$ROOT\gemini"; $TGT = "$env:USERPROFILE\.gemini"
     Log-I "Kaynak: $SRC"
     Log-I "Hedef:  $TGT"
