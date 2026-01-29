@@ -50,11 +50,13 @@ graph TD
 
 ```mermaid
 graph TD
-    PRD[Analiz Bitti] --> FE[Frontend Başlat]
+    Analiz[analiz_master.md<br/>(Tek Gerçek)] --> FE[Frontend Başlat]
     FE --> Dev[UI Geliştirme]
     Dev --> Rev{Onay?}
     Rev -- Red --> Dev
     Rev -- Onay --> Next[Backend'e Geç]
+    
+    style Analiz fill:#b30000,stroke:#333,stroke-width:2px,color:#fff
 ```
 
 ### Faz 3: Backend & Entegrasyon
@@ -63,10 +65,13 @@ graph TD
 
 ```mermaid
 graph TD
-    FE_OK[Frontend Onaylı] --> BE[Backend Başlat]
+    Analiz[analiz_master.md<br/>(Tek Gerçek)] --> BE[Backend Başlat]
+    FE_OK[Frontend Onaylı] --> BE
     BE --> API[API & DB]
     API --> Integ[Entegrasyon]
     Integ --> Live[Canlıya Geçiş]
+    
+    style Analiz fill:#b30000,stroke:#333,stroke-width:2px,color:#fff
 ```
 
 ---
