@@ -142,6 +142,11 @@ Write-Host "$BACKUP_DIR"
 Write-Success "`n[OK] Guncelleme tamamlandi!"
 Write-Warning "[WARN] Antigravity IDE'yi yeniden baslatin (veya refresh edin)"
 
+Write-Host "`nONEMLI HATIRLATMA:" -ForegroundColor Yellow
+Write-Host "  1. Antigravity IDE'ye git" -ForegroundColor Cyan
+Write-Host "  2. Sag ustteki uc noktaya (...) tikla" -ForegroundColor Cyan
+Write-Host "  3. 'Refresh Rules' ve 'Refresh Workflows' seceneklerine tikla" -ForegroundColor Cyan
+
 Write-Host "`n===============================================`n" -ForegroundColor Magenta
 
 exit 0

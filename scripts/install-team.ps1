@@ -177,6 +177,11 @@ try {
     if ($filesCopied -gt 0) {
         Write-Header "KURULUM BASARILI! ($filesCopied oge)"
         Write-Info "Lutfen Antigravity IDE'yi yeniden baslatin."
+        
+        Write-Host "`nONEMLI HATIRLATMA:" -ForegroundColor Yellow
+        Write-Host "  1. Antigravity IDE'ye git" -ForegroundColor Cyan
+        Write-Host "  2. Sag ustteki uc noktaya (...) tikla" -ForegroundColor Cyan
+        Write-Host "  3. 'Refresh Rules' ve 'Refresh Workflows' seceneklerine tikla" -ForegroundColor Cyan
     }
     else {
         Write-Header "UYARI: Hicbir dosya kopyalanmadi!"
