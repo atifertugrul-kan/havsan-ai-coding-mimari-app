@@ -50,7 +50,7 @@ graph TD
 
 ```mermaid
 graph TD
-    Analiz[analiz_master.md<br/>(Tek Gerçek)] --> FE[Frontend Başlat]
+    Analiz["analiz_master.md<br/>(Tek Gerçek)"] --> FE[Frontend Başlat]
     FE --> Dev[UI Geliştirme]
     Dev --> Rev{Onay?}
     Rev -- Red --> Dev
@@ -65,7 +65,7 @@ graph TD
 
 ```mermaid
 graph TD
-    Analiz[analiz_master.md<br/>(Tek Gerçek)] --> BE[Backend Başlat]
+    Analiz["analiz_master.md<br/>(Tek Gerçek)"] --> BE[Backend Başlat]
     FE_OK[Frontend Onaylı] --> BE
     BE --> API[API & DB]
     API --> Integ[Entegrasyon]
