@@ -48,7 +48,19 @@ New-Item -ItemType Directory -Force -Path $BACKUP_DIR | Out-Null
 
 # Dosyalari yedekle
 if (Test-Path "$TARGET_DIR\GEMINI.md") { Copy-Item "$TARGET_DIR\GEMINI.md" "$BACKUP_DIR\GEMINI.md" -Force }
-if (Test-Path "$TARGET_DIR\antigravity") { Copy-Item "$TARGET_DIR\antigravity" "$BACKUP_DIR\antigravity" -Recurse -Force }
+
+# SADECE skills ve workflows'u yedekle (code_tracker hatalarini onlemek icin)
+if (Test-Path "$TARGET_DIR\antigravity") {
+    $antigravityBackup = "$BACKUP_DIR\antigravity"
+    New-Item -ItemType Directory -Force -Path $antigravityBackup | Out-Null
+    
+    if (Test-Path "$TARGET_DIR\antigravity\skills") {
+        Copy-Item "$TARGET_DIR\antigravity\skills" "$antigravityBackup\skills" -Recurse -Force
+    }
+    if (Test-Path "$TARGET_DIR\antigravity\workflows") {
+        Copy-Item "$TARGET_DIR\antigravity\workflows" "$antigravityBackup\workflows" -Recurse -Force
+    }
+}
 
 Write-Success "Yedekleme tamamlandi"
 

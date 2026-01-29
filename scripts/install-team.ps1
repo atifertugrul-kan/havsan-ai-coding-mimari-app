@@ -56,16 +56,30 @@ try {
     Write-Debug "Yedek klasoru olusturuluyor: $BACKUP_DIR"
     New-Item -ItemType Directory -Force -Path $BACKUP_DIR | Out-Null
 
+    # GEMINI.md Yedekle
     if (Test-Path "$TARGET_DIR\GEMINI.md") { 
         Write-Debug "GEMINI.md yedekleniyor..."
         Copy-Item "$TARGET_DIR\GEMINI.md" "$BACKUP_DIR\GEMINI.md" -Force -Confirm:$false
         Write-Success "Eski GEMINI.md yedeklendi"
     }
 
+    # SADECE skills ve workflows klasorlerini yedekle
+    # (brain ve code_tracker gibi klasorler cok derin yollara sahip oldugu icin hata veriyor)
     if (Test-Path "$TARGET_DIR\antigravity") { 
-        Write-Debug "antigravity klasoru yedekleniyor..."
-        Copy-Item "$TARGET_DIR\antigravity" "$BACKUP_DIR\antigravity" -Recurse -Force -Confirm:$false
-        Write-Success "Eski antigravity klasoru yedeklendi"
+        $antigravityBackup = "$BACKUP_DIR\antigravity"
+        New-Item -ItemType Directory -Force -Path $antigravityBackup | Out-Null
+
+        if (Test-Path "$TARGET_DIR\antigravity\skills") {
+            Write-Debug "Skills yedekleniyor..."
+            Copy-Item "$TARGET_DIR\antigravity\skills" "$antigravityBackup\skills" -Recurse -Force -Confirm:$false
+            Write-Success "Eski Skills yedeklendi"
+        }
+
+        if (Test-Path "$TARGET_DIR\antigravity\workflows") {
+            Write-Debug "Workflows yedekleniyor..."
+            Copy-Item "$TARGET_DIR\antigravity\workflows" "$antigravityBackup\workflows" -Recurse -Force -Confirm:$false
+            Write-Success "Eski Workflows yedeklendi"
+        }
     }
 
     # ============================================
