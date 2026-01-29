@@ -14,6 +14,17 @@ function Write-Error { param([string]$msg) Write-Host "[ERROR] $msg" -Foreground
 # ============================================
 # Baslangic
 # ============================================
+Clear-Host
+Write-Host "
+  _   _    _ __     __ ___    _    _   _ 
+ | | | |  / \\ \   / // __|  / \  | \ | |
+ | |_| | / _ \\ \ / / \__ \ / _ \ |  \| |
+ |  _  |/ ___ \\ V /  |___// ___ \| |\  |
+ |_| |_/_/   \_\\_/   |___/_/   \_\_| \_|
+                                         
+      Robotik & Yapay Zeka
+" -ForegroundColor Cyan
+
 Write-Host "`n=== HAVSAN Antigravity Hizli Guncelleme ===" -ForegroundColor Magenta
 Write-Host "===============================================`n" -ForegroundColor Magenta
 

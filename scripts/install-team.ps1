@@ -15,6 +15,18 @@ try {
     function Write-Debug { param([string]$msg) Write-Host "[DEBUG] $msg" -ForegroundColor DarkGray }
 
     Clear-Host
+    
+    # Logo Yazdirma
+    Write-Host "
+  _   _    _ __     __ ___    _    _   _ 
+ | | | |  / \\ \   / // __|  / \  | \ | |
+ | |_| | / _ \\ \ / / \__ \ / _ \ |  \| |
+ |  _  |/ ___ \\ V /  |___// ___ \| |\  |
+ |_| |_/_/   \_\\_/   |___/_/   \_\_| \_|
+                                         
+      Robotik & Yapay Zeka
+" -ForegroundColor Cyan
+
     Write-Header "HAVSAN Antigravity Kurulum Sihirbazi"
 
     # Dizinleri Belirleme
