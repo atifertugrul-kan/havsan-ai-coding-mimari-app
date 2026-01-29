@@ -127,7 +127,7 @@ try {
     $cnt += Copy-Safe "$SRC\antigravity\workflows" "$TGT\antigravity\workflows" $true
 
     if ($cnt -gt 0) {
-        Log-H "ISLEM BASARILI! (v2.5.0)"
+        Log-H "ISLEM BASARILI! (v2.5.1)"
         Write-Host "`n1. Antigravity IDE -> Refresh Rules" -F Cyan
     }
     else { Log-E "Hata!" }
