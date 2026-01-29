@@ -1,5 +1,6 @@
 # 🚀 HAVSAN Antigravity
 
+**Versiyon:** 2.0.0 (Unified & Simplified)
 **Amaç:** HAVSAN Yapay Zeka & Robotik ekibi için standart geliştirme ortamı.
 
 ---
