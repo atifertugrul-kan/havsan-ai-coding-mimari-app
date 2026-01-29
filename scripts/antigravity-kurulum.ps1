@@ -6,10 +6,10 @@ param([switch]$Startup)
 try {
     # --- CHANGELOG ---
     $CHANGELOG = @'
-    [v2.5.0 YENILIKLER]
-    - Arayuz: Ilerleme cubugu kaldirildi (Sadelestirildi)
-    - Branding: ELAZIG ORGANIZE SANAYI BOLGESI imzasi eklendi
-    - Performans: Acilis hizi optimize edildi
+    [v2.5.1 YENILIKLER]
+    - Arayuz: Satir araliklari geniletildi (Daha iyi okunabilirlik)
+    - Branding: ELAZIG ORGANIZE SANAYI BOLGESI imzasi
+    - Fix: Eski versiyon numarasi gorunme sorunu giderildi
 '@
 
     # Helper Functions
