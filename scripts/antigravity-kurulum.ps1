@@ -4,12 +4,16 @@ param([switch]$Startup)
 # HAVSAN Antigravity - Kurulum ve Guncelleme
 # ============================================
 try {
+    # FIX: Turkce ve Emoji karakterleri icin UTF-8 zorunlu
+    [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
     # --- CHANGELOG ---
     $CHANGELOG = @'
-    [v2.6.1 YENILIKLER]
-    - Fix: "Antigravity IDE" artik VS Code yerine Cursor'i acar
-    - Otomasyon: Cursor bulunamazsa VS Code fallback devreye girer
-    - Kural: Versiyon senkronizasyonu guclendirildi
+    [v2.6.5 YENILIKLER]
+    - Fix: "Antigravity IDE" kisayolu ile dogru baslatma
+    - Fix: Konsol karakter kodlamasi (UTF-8) ve Emojiler duzeltildi
+    - Branding: Gorsel butunluk saglandi
+    - Otomasyon: Akilli Senkronizasyon (Admin Push / Dev Pull)
 '@
 
     # Helper Functions
@@ -56,12 +60,10 @@ try {
     Write-Host ""
     Write-Host "    Atif Ertugrul Kan" -F Yellow
     Write-Host "    Kurumsal Gelistirici Altyapi Mimari & HAVSAN CTO" -F DarkGray
-    Write-Host "    v2.6.1 (Cursor Support)" -F Gray
+    Write-Host "    v2.6.5 (Clean & Stable)" -F Gray
     Write-Host ""
     Write-Host ""
     Write-Host $CHANGELOG -F Green
-    Write-Host ""
-    Write-Host ""
 
     $SRC = "$ROOT\gemini"; $TGT = "$env:USERPROFILE\.gemini"
     Log-I "Kaynak: $SRC"
@@ -152,17 +154,23 @@ try {
     $cnt += Copy-Safe "$SRC\antigravity\workflows" "$TGT\antigravity\workflows" $true
 
     if ($cnt -gt 0) {
-        Log-H "ISLEM BASARILI! (v2.6.2)"
+        Log-H "ISLEM BASARILI! (v2.6.5)"
         Write-Host ""
         
-        # --- FEATURE: Auto-Launch IDE ---
-        Log-I "Antigravity IDE Baslatiliyor..."
+        # --- FEATURE: Auto-Launch IDE (Antigravity Shortcut) ---
+        Log-I "Google Antigravity IDE Baslatiliyor..."
+        $agShortcut = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Antigravity\Antigravity.lnk"
+        
         try {
-            if (Get-Command "code" -ErrorAction SilentlyContinue) {
-                Start-Process "code" -ArgumentList "`"$ROOT`"" -WindowStyle Hidden
-                Log-S "IDE Acildi"
+            if (Test-Path $agShortcut) {
+                Start-Process -FilePath $agShortcut
+                Log-S "Antigravity IDE Acildi"
             }
-            else { Log-W "'code' komutu bulunamadi, IDE'yi elle aciniz." }
+            elseif (Get-Command "cursor" -ErrorAction SilentlyContinue) {
+                Start-Process "cursor" -ArgumentList "`"$ROOT`"" -WindowStyle Hidden
+                Log-W "Kisayol bulunamadi, 'cursor' komutu kullanildi."
+            }
+            else { Log-W "Antigravity IDE bulunamadi." }
         }
         catch { Log-W "IDE otomatik acilamadi." }
 

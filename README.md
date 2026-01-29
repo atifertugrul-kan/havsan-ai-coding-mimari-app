@@ -16,16 +16,21 @@
 
 ## ⚡ 10 Saniyede Kurulum & Güncelleme
 
-### İlk Kurulum
-1. `scripts/antigravity-kurulum.ps1` dosyasına **Sağ Tık -> Run with PowerShell**
+### Yöntem 1: Otomatik (Önerilen) ⭐
+1. `antigravity-kurulum.bat` dosyasına **Çift Tıkla**
+2. Bitti! ✅
 
+### Yöntem 2: Manuel (PowerShell)
+1. `antigravity-kurulum.ps1` dosyasına **Sağ Tık -> Run with PowerShell**
 
-### Atıf Yeni Kural Eklediğinde? (Güncelleme)
-1. `scripts/antigravity-kurulum.ps1` çalıştır.
-2. Script kimle çalıştığına bakar:
-   - **ATIF ise:** Değişiklikleri Git'e gönderir (**Push**).
-   - **Diğerleri ise:** Değişiklikleri çeker (**Pull**).
-3. Bitti! ✅
+> **Not:** `.bat` dosyası otomatik olarak PowerShell kontrolü yapar ve güvenlik ayarlarını bypass eder.
+
+---
+
+### Güncelleme İçin
+Aynı dosyayı tekrar çalıştırın. Script kimle çalıştığına bakar:
+- **ATIF ise:** Değişiklikleri Git'e gönderir (**Push**).
+- **Diğerleri ise:** Değişiklikleri çeker (**Pull**).
 
 ---
 
@@ -42,7 +47,21 @@
     *   Git üzerindeki güncel kuralları çeker (Auto-Pull).
     *   Yerel sisteme entegre eder.
 
+
 **Mimari Güncelleme:** `mimari-app` üzerinde bir geliştirme yapıldığında, PowerShell dosyası da otomatik olarak güncellenip Git'e aktarılır.
+
+---
+
+## 🛡️ Güvenlik ve Yönetişim (Public Repo Policy)
+
+**"Başkaları projemi bozabilir mi?"**
+Hayır. Bu depo **Public (Halka Açık)** olsa da, **Write (Yazma/Commit)** yetkileri sıkı bir şekilde korunmaktadır.
+
+1.  **Yetki (Authorization):** Sadece proje sahibi (**Atıf**) ve yetkilendirilmiş Collaborator'lar `main` dalına doğrudan kod gönderebilir (Push).
+2.  **Dış Katkı (Community):** Dışarıdan (veya yetkisiz) geliştiriciler projeyi yalnızca **Clone** edebilir veya **Fork**'layabilir.
+3.  **Değişiklik Talebi:** Eğer bir başkası değişiklik yapmak isterse, **Pull Request (PR)** açmak zorundadır. Bu talepler, yönetici onayı olmadan projeye dahil edilemez.
+
+> **Özet:** Kodlarınız halka açıktır (okunabilir), ancak kontrol tamamen sizdedir (değiştirilemez).
 
 ---
 
