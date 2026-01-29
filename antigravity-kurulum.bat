@@ -2,6 +2,9 @@
 chcp 65001 >nul 2>&1
 setlocal enabledelayedexpansion
 
+REM Maximize Window
+mode con cols=120 lines=40
+
 REM ============================================
 REM HAVSAN Antigravity - Kurulum Wrapper
 REM ============================================
@@ -42,6 +45,7 @@ if %PS_VERSION% LSS 5 (
     echo.
 )
 
+echo.
 echo  [BILGI] PowerShell script baslatiliyor...
 echo.
 echo ============================================================
