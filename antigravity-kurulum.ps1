@@ -178,13 +178,26 @@ try {
         Write-Host "`n   ⚠️  DIKKAT GEREKLI  ⚠️" -F Red -Back White
         Write-Host "   Kurallar guncellendi. IDE icinde EN AZ BIR KEZ" -F Yellow
         Write-Host "   'Refresh Rules' butonuna basmak veya IDE'yi yeniden baslatmak ZORUNLUDUR." -F Yellow
+        Write-Host ""
         
         # Popup Message (Blocking)
         try {
-            $ws = New-Object -ComObject WScript.Shell
-            $btn = $ws.Popup("Guncelleme Tamamlandi!`n`nLutfen Antigravity IDE icinde 'Refresh Rules' calistirdiginizdan emin olun.", 0, "Antigravity Hatirlatici", 64)
+            Add-Type -AssemblyName System.Windows.Forms
+            [System.Windows.Forms.MessageBox]::Show(
+                "Guncelleme Tamamlandi!`n`nLutfen Antigravity IDE icinde 'Refresh Rules' calistirdiginizdan emin olun.",
+                "Antigravity Hatirlatici",
+                [System.Windows.Forms.MessageBoxButtons]::OK,
+                [System.Windows.Forms.MessageBoxIcon]::Information
+            ) | Out-Null
         }
-        catch {} ## Fail silently on non-interactive
+        catch {
+            # Fallback to WScript.Shell if Windows.Forms fails
+            try {
+                $ws = New-Object -ComObject WScript.Shell
+                $ws.Popup("Guncelleme Tamamlandi!`n`nLutfen Antigravity IDE icinde 'Refresh Rules' calistirdiginizdan emin olun.", 0, "Antigravity Hatirlatici", 64) | Out-Null
+            }
+            catch { } # Fail silently if both methods fail
+        }
         
     }
     else { Log-E "Hata!" }
