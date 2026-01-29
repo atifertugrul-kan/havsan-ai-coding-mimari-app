@@ -101,7 +101,7 @@ try {
             if (git -C "$ROOT" status --porcelain) {
                 Log-I "Yerel degisiklikler tespit edildi, gonderiliyor..."
                 git -C "$ROOT" add .
-                git -C "$ROOT" commit -m "auto: Rules Update by Admin ($git_git_user)"
+                git -C "$ROOT" commit -m "auto: Rules Update by Admin ($git_user)"
                 git -C "$ROOT" push origin main
                 Log-S "Kurallar Git'e PUSH edildi."
             }
