@@ -45,6 +45,35 @@ try {
     Write-Info "Kaynak Klasor:  $SOURCE_DIR"
     Write-Info "Hedef Klasor:   $TARGET_DIR"
 
+    Write-Info "Hedef Klasor:   $TARGET_DIR"
+
+    # ============================================
+    # Adim 0: Git Guncelleme (Otomatik Pull)
+    # ============================================
+    Write-Header "0. Proje Guncelleniyor (Git Pull)"
+    
+    if (Test-Path "$PROJECT_ROOT\.git") {
+        try {
+            Write-Info "Git deposu algilandi, guncelleme kontrol ediliyor..."
+            # Git command outputunu yakalamak icin
+            $gitOutput = git -C "$PROJECT_ROOT" pull 2>&1
+            Write-Host $gitOutput -ForegroundColor Gray
+            
+            if ($LASTEXITCODE -eq 0) {
+                Write-Success "Proje en son versiyona guncellendi."
+            }
+            else {
+                Write-Warning "Git pull sirasinda bir uyari/hata olustu. Yerel dosyalarla devam ediliyor."
+            }
+        }
+        catch {
+            Write-Warning "Git komutu calistirilamadi. Git yuklu mu?"
+        }
+    }
+    else {
+        Write-Warning "Bu klasor bir Git deposu degil. Guncelleme atlandi."
+    }
+
     # ============================================
     # Adim 1: Kontroller
     # ============================================

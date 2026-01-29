@@ -22,6 +22,7 @@ Aşağıdaki script dosyasına **Sağ Tıkla** ve **"Run with PowerShell"** seç
 
 #### Bu sihirbaz ne yapar?
 *   ✅ **Kurulum:** Antigravity IDE ortamını sıfırdan kurar.
+*   ✅ **Otomatik Git Pull:** Projeyi sunucudan en güncel haline çeker.
 *   ✅ **Güncelleme:** Mevcut kuralları en son versiyona yükseltir.
 *   ✅ **Yedekleme:** Eski ayarlarınızı `backups/` klasörüne güvenle saklar.
 *   ✅ **Standartlaşma:** Tüm ekibin aynı yapay zeka beynini kullanmasını sağlar.
