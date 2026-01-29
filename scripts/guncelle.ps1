@@ -46,57 +46,52 @@ Write-Info "`nYedekleme olusturuluyor: $BACKUP_DIR"
 
 New-Item -ItemType Directory -Force -Path $BACKUP_DIR | Out-Null
 
-# GEMINI.md yedekle
-if (Test-Path "$TARGET_DIR\GEMINI.md") {
-    Copy-Item "$TARGET_DIR\GEMINI.md" "$BACKUP_DIR\GEMINI.md" -Force
-}
-
-# antigravity klasorunu yedekle
-if (Test-Path "$TARGET_DIR\antigravity") {
-    Copy-Item "$TARGET_DIR\antigravity" "$BACKUP_DIR\antigravity" -Recurse -Force
-}
+# Dosyalari yedekle
+if (Test-Path "$TARGET_DIR\GEMINI.md") { Copy-Item "$TARGET_DIR\GEMINI.md" "$BACKUP_DIR\GEMINI.md" -Force }
+if (Test-Path "$TARGET_DIR\antigravity") { Copy-Item "$TARGET_DIR\antigravity" "$BACKUP_DIR\antigravity" -Recurse -Force }
 
 Write-Success "Yedekleme tamamlandi"
 
 # ============================================
-# Senkronizasyon
+# Senkronizasyon ve Rename
 # ============================================
 Write-Info "`nDosyalar kopyalaniyor..."
 
 $syncCount = 0
 
-# GEMINI.md kopyala
-if (Test-Path "$SOURCE_DIR\GEMINI.md") {
+# 1. GEMINI.dist.md -> GEMINI.md olarak kopyala
+if (Test-Path "$SOURCE_DIR\GEMINI.dist.md") {
+    Copy-Item "$SOURCE_DIR\GEMINI.dist.md" "$TARGET_DIR\GEMINI.md" -Force
+    Write-Success "GEMINI.md guncellendi (dist dosyasindan)"
+    $syncCount++
+}
+elseif (Test-Path "$SOURCE_DIR\GEMINI.md") {
+    # Eski yapi destegi
     Copy-Item "$SOURCE_DIR\GEMINI.md" "$TARGET_DIR\GEMINI.md" -Force
     Write-Success "GEMINI.md guncellendi"
     $syncCount++
 }
 
-# antigravity/skills kopyala
+# 2. KURULUM.md kopyala
+if (Test-Path "$SOURCE_DIR\KURULUM.md") {
+    Copy-Item "$SOURCE_DIR\KURULUM.md" "$TARGET_DIR\KURULUM.md" -Force
+    Write-Success "KURULUM.md guncellendi"
+    $syncCount++
+}
+
+# 3. antigravity/skills kopyala
 if (Test-Path "$SOURCE_DIR\antigravity\skills") {
     $skillsTarget = "$TARGET_DIR\antigravity\skills"
-    
-    # Hedef klasoru temizle
-    if (Test-Path $skillsTarget) {
-        Remove-Item $skillsTarget -Recurse -Force
-    }
-    
-    # Yeni dosyalari kopyala
+    if (Test-Path $skillsTarget) { Remove-Item $skillsTarget -Recurse -Force }
     Copy-Item "$SOURCE_DIR\antigravity\skills" $skillsTarget -Recurse -Force
     Write-Success "Skills guncellendi"
     $syncCount++
 }
 
-# antigravity/workflows kopyala
+# 4. antigravity/workflows kopyala
 if (Test-Path "$SOURCE_DIR\antigravity\workflows") {
     $workflowsTarget = "$TARGET_DIR\antigravity\workflows"
-    
-    # Hedef klasoru temizle
-    if (Test-Path $workflowsTarget) {
-        Remove-Item $workflowsTarget -Recurse -Force
-    }
-    
-    # Yeni dosyalari kopyala
+    if (Test-Path $workflowsTarget) { Remove-Item $workflowsTarget -Recurse -Force }
     Copy-Item "$SOURCE_DIR\antigravity\workflows" $workflowsTarget -Recurse -Force
     Write-Success "Workflows guncellendi"
     $syncCount++

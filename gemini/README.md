@@ -8,48 +8,26 @@ Bu klasör, HAVSAN ekibi için Antigravity IDE konfigürasyonlarını içerir.
 
 ```
 gemini/
+├── GEMINI.dist.md              # Global Rules (rename → GEMINI.md)
+├── KURULUM.md                  # Kurulum Rehberi
 └── antigravity/
     ├── skills/                 # 3 özel yetenek
-    │   ├── havsan-appsscript/
-    │   ├── havsan-code-review/
-    │   └── havsan-development/
     └── workflows/              # 3 iş akışı
-        ├── analist.md
-        ├── backend-architect.md
-        └── frontend-design.md
 ```
 
 ---
 
-## 🚀 Kurulum (Ekip Üyeleri İçin)
+## 🚀 Kurulum
 
-### Adım 1: Klasörü Kopyala
+### Yöntem 1: Script ile (Önerilen)
 
-Bu `gemini/antigravity/` klasörünü kopyala.
+`scripts/install-team.ps1` dosyasını çalıştırın. Otomatik kurulum yapar.
 
-### Adım 2: Hedef Konuma Yapıştır
+### Yöntem 2: Manuel
 
-```
-C:\Users\<KULLANICI_ADIN>\.gemini\antigravity\
-```
-
-**İpucu:** Mevcut `antigravity` klasörü varsa, **birleştir** seçeneğini seç.
-
-### Adım 3: IDE'yi Yeniden Başlat
-
-Antigravity IDE'yi kapat ve tekrar aç.
-
----
-
-## 📝 Global Dosyalar
-
-`GEMINI.md` ve `KURULUM.md` dosyaları **Atıf tarafından ayrıca paylaşılır**.
-
-Bu dosyalar şuraya konulmalı:
-```
-C:\Users\<KULLANICI_ADIN>\.gemini\GEMINI.md
-C:\Users\<KULLANICI_ADIN>\.gemini\KURULUM.md
-```
+1. `gemini/antigravity` klasörünü → `.gemini/` içine kopyala
+2. `gemini/GEMINI.dist.md` dosyasını → `.gemini/GEMINI.md` olarak kopyala **(Adını değiştir)**
+3. `gemini/KURULUM.md` dosyasını → `.gemini/KURULUM.md` olarak kopyala
 
 ---
 
@@ -57,8 +35,9 @@ C:\Users\<KULLANICI_ADIN>\.gemini\KURULUM.md
 
 Atıf'tan yeni versiyon geldiğinde:
 
-1. Yeni `gemini/antigravity/` klasörünü al
-2. Adım 1-3'ü tekrarla
+1. `Scripts/install-team.ps1` çalıştır
+   **VEYA**
+2. Manuel adımları tekrarla
 
 ---
 
