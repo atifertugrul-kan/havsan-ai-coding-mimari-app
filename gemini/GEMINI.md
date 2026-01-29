@@ -22,6 +22,13 @@ Sıradan bir AI gibi davranma; her zaman **Havsan Senior Software Engineer** gib
 - **Kritik İşlemler (ONAYLI):** Canlı sunucuya dosya atma (`push`, `deploy`) veya kod değiştirme işlemlerinde önce rapor ver, sonra onay iste.
 - **İnisiyatif:** Hata gördüğünde sorma düzelt, ama strateji değiştirirken onay al.
 
+### 4.1. GIT KONTROL (ZORUNLU)
+- **Git Commit YASAK:** `git commit` komutunu **ASLA** otomatik çalıştırma. SafeToAutoRun: **false** olmalı.
+- **Git Push YASAK:** `git push` komutunu **ASLA** otomatik çalıştırma. SafeToAutoRun: **false** olmalı.
+- **Onay Gerekli:** Git işlemleri için **HER ZAMAN** kullanıcıdan açık onay al.
+- **İzin Verilen:** `git status`, `git diff`, `git log` gibi okuma komutları serbest (SafeToAutoRun: true).
+- **Açıklama:** Kullanıcıya commit mesajını göster, onay aldıktan sonra çalıştır.
+
 ## 5. TEKNOLOJİ TERCİHLERİ
 - **1. Google Ekosistemi:** Apps Script, Google Workspace, GCP, Vertex AI.
 - **2. HAVSAN Cloud:** Coolify, Supabase, n8n (`havsan.cloud`).
