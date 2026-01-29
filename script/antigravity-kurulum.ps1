@@ -200,30 +200,13 @@ try {
         Log-H "ISLEM BASARILI! (v2.6.6)"
         Write-Host ""
         
-        # --- FEATURE: Auto-Launch IDE (Antigravity Shortcut) ---
-        Log-I "Google Antigravity IDE Baslatiliyor..."
-        $agShortcut = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Antigravity\Antigravity.lnk"
-        
-        try {
-            if (Test-Path $agShortcut) {
-                Start-Process -FilePath $agShortcut
-                Log-S "Antigravity IDE Acildi"
-            }
-            elseif (Get-Command "cursor" -ErrorAction SilentlyContinue) {
-                Start-Process "cursor" -ArgumentList "`"$ROOT`"" -WindowStyle Hidden
-                Log-W "Kisayol bulunamadi, 'cursor' komutu kullanildi."
-            }
-            else { Log-W "Antigravity IDE bulunamadi." }
-        }
-        catch { Log-W "IDE otomatik acilamadi." }
-
-        # --- FEATURE: Force Refresh Prompt ---
+        # --- FEATURE: Force Refresh Prompt (BEFORE IDE Launch) ---
         Write-Host "`n   ⚠️  DIKKAT GEREKLI  ⚠️" -F Red -Back White
         Write-Host "   Kurallar guncellendi. IDE icinde EN AZ BIR KEZ" -F Yellow
         Write-Host "   'Refresh Rules' butonuna basmak veya IDE'yi yeniden baslatmak ZORUNLUDUR." -F Yellow
         Write-Host ""
         
-        # Popup Message (Blocking - TopMost)
+        # Popup Message (Blocking - TopMost) - BEFORE IDE LAUNCH
         try {
             Add-Type -AssemblyName System.Windows.Forms
             $popup = New-Object System.Windows.Forms.Form
@@ -251,6 +234,23 @@ try {
             }
             catch { } # Fail silently if both methods fail
         }
+        
+        # --- FEATURE: Auto-Launch IDE (AFTER Popup) ---
+        Log-I "Google Antigravity IDE Baslatiliyor..."
+        $agShortcut = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Antigravity\Antigravity.lnk"
+        
+        try {
+            if (Test-Path $agShortcut) {
+                Start-Process -FilePath $agShortcut
+                Log-S "Antigravity IDE Acildi"
+            }
+            elseif (Get-Command "cursor" -ErrorAction SilentlyContinue) {
+                Start-Process "cursor" -ArgumentList "`"$ROOT`"" -WindowStyle Hidden
+                Log-W "Kisayol bulunamadi, 'cursor' komutu kullanildi."
+            }
+            else { Log-W "Antigravity IDE bulunamadi." }
+        }
+        catch { Log-W "IDE otomatik acilamadi." }
         
     }
     else { Log-E "Hata!" }
