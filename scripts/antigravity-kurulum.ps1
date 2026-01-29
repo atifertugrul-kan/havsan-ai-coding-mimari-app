@@ -40,7 +40,18 @@ try {
         else {
             $percent = 0
         }
-        Write-Progress -Activity "Antigravity Yukleniyor..." -Status "$percent% - $activity" -PercentComplete $percent
+
+        # Progress Bar Gorseli
+        $width = 30
+        $filled = [math]::Round(($percent / 100) * $width)
+        $empty = $width - $filled
+        $bar = "|" * $filled + " " * $empty
+        
+        # Satir ici guncelleme (Carriage Return `r)
+        Write-Host -NoNewline "`r[$bar] $percent% - $activity                               "
+        
+        # Eger %100 ise yeni satira gec
+        if ($percent -ge 100) { Write-Host "" }
     }
     
     # Logo Yazdirma (Here-String ile bozulmayi onle)
@@ -52,7 +63,7 @@ try {
  |_| |_/_/   \_\\_/   |___/_/   \_\_| \_|
                                          
       Robotik & Yapay Zeka
-      v2.1.3 (Maximized)
+      v2.1.4 (CLI Bar)
     
 '@
     Write-Host $logo -ForegroundColor Cyan
