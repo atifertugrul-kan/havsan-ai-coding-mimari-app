@@ -25,7 +25,7 @@ try {
  |_| |_/_/   \_\\_/   |___/_/   \_\_| \_|
                                          
       Robotik & Yapay Zeka
-      v2.0.1 (Unified)
+      v2.1.0 (Sync Rules)
 " -ForegroundColor Cyan
 
     Write-Header "HAVSAN Antigravity Kurulum ve Guncelleme"
