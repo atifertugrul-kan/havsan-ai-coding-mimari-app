@@ -25,7 +25,7 @@ try {
 
     # Paths
     $SCRIPT_PATH = $MyInvocation.MyCommand.Definition
-    $ROOT = Split-Path -Parent (Split-Path -Parent $SCRIPT_PATH)
+    $ROOT = Split-Path -Parent $SCRIPT_PATH
     
     # --- AUTO-STARTUP CHECK ---
     if ($Startup) {
