@@ -1,0 +1,232 @@
+# ============================================
+# HAVSAN PROJECT .gitignore
+# ============================================
+# Docker-First Development Environment
+# Created: 2026-01-29
+# ============================================
+
+# ============================================
+# 1. NODE.JS & NPM
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Dependency directories
+jspm_packages/
+
+# Package manager lock files (keep only one)
+# package-lock.json  # Uncomment if using yarn
+# yarn.lock          # Uncomment if using npm
+
+# ============================================
+# 2. ENVIRONMENT & SECRETS
+# ============================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.*.local
+
+# API Keys & Credentials
+*.key
+*.pem
+*.p12
+secrets/
+credentials/
+
+# ============================================
+# 3. DOCKER & CONTAINERS
+# ============================================
+# Docker volumes (local data)
+docker-data/
+volumes/
+.docker/
+
+# Docker override files (developer-specific)
+docker-compose.override.yml
+
+# ============================================
+# 4. BUILD OUTPUTS
+# ============================================
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+.parcel-cache/
+.vite/
+
+# ============================================
+# 5. LOGS & TEMP FILES
+# ============================================
+logs/
+*.log
+*.log.*
+tmp/
+temp/
+*.tmp
+*.temp
+
+# ============================================
+# 6. IDE & EDITOR
+# ============================================
+# VSCode
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# JetBrains (WebStorm, IntelliJ, etc.)
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# ============================================
+# 7. OS SPECIFIC
+# ============================================
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ============================================
+# 8. TESTING & COVERAGE
+# ============================================
+coverage/
+*.coverage
+.nyc_output/
+.jest/
+test-results/
+playwright-report/
+e2e-results/
+
+# ============================================
+# 9. DATABASES (Local Development)
+# ============================================
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# PostgreSQL
+postgres-data/
+pgdata/
+
+# MongoDB
+mongo-data/
+
+# ============================================
+# 10. GOOGLE APPS SCRIPT (CLASP)
+# ============================================
+.clasprc.json
+.clasp.json
+# Note: .clasp.json should be committed for team projects
+# but .clasprc.json (user credentials) must NEVER be committed
+
+# ============================================
+# 11. FRONTEND SPECIFIC
+# ============================================
+# React / Next.js
+.next/
+out/
+
+# Vite
+.vite/
+
+# Static assets (if generated)
+public/uploads/
+public/temp/
+
+# ============================================
+# 12. BACKEND SPECIFIC
+# ============================================
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+
+# PHP
+vendor/
+composer.phar
+
+# ============================================
+# 13. DOCUMENTATION (Generated)
+# ============================================
+# Keep source docs, ignore generated
+docs/generated/
+docs/api/
+
+# ============================================
+# 14. HAVSAN SPECIFIC
+# ============================================
+# Analysis & Planning (Keep these!)
+# docs/analiz_master.md
+# docs/gereksinim_analizi.md
+
+# Temporary analysis files
+docs/temp/
+docs/draft/
+
+# ============================================
+# 15. MISC
+# ============================================
+*.bak
+*.backup
+*.orig
+*.rej
+*.patch
+
+# Archive files
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# ============================================
+# NOTES FOR DEVELOPERS
+# ============================================
+# 1. This .gitignore follows HAVSAN Docker-First principles
+# 2. Local installations (Node, Python, etc.) should NOT exist
+# 3. All development happens inside Docker containers
+# 4. Environment files (.env) are NEVER committed
+# 5. Keep analysis documents (analiz_master.md, etc.) in Git
+# ============================================
