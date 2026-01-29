@@ -60,7 +60,8 @@ try {
 
     # Paths
     $SCRIPT_PATH = $MyInvocation.MyCommand.Definition
-    $ROOT = Split-Path -Parent $SCRIPT_PATH
+    $SCRIPT_DIR = Split-Path -Parent $SCRIPT_PATH
+    $ROOT = Split-Path -Parent $SCRIPT_DIR  # Go up one level (script/ -> root)
     
     # --- AUTO-STARTUP CHECK ---
     if ($Startup) {
