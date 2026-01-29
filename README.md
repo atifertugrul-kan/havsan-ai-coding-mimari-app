@@ -41,7 +41,7 @@ graph TD
     Q --> Loop
     Loop -- Evet --> PRD["gereksinim_analizi.md<br/>(Tek Kaynak - Kopyalamak YASAK)"]
     
-    style PRD fill:#f9f,stroke:#333,stroke-width:2px
+    style PRD fill:#b30000,stroke:#333,stroke-width:2px,color:#fff
 ```
 
 ### Faz 2: Frontend (Dummy Data)
