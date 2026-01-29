@@ -4,6 +4,22 @@ Bu klasör, Antigravity konfigürasyonlarını yönetmek için PowerShell script
 
 ---
 
+### 👥 Ekip Üyesi (Kullanıcı)
+Ekip üyeleri için kurulum süreci çok basittir:
+
+1. `gemini/antigravity/` klasörünü kopyala
+2. `C:\Users\<KULLANICI_ADIN>\.gemini\antigravity\` altına yapıştır
+3. Antigravity IDE'yi yeniden başlat
+*(Veya otomatik kurulum için `install-team.ps1` dosyasını çalıştır)*
+
+### 👨‍💻 Admin (Atıf)
+Proje yöneticisi için senkronizasyon araçları:
+
+**Kullanım:**
+Script dosyasına sağ tıklayıp "Run with PowerShell" deyin.
+
+**Ne Yapar:**
+
 ## 📝 Scriptler
 
 ### `install-team.ps1` - Ekip Kurulumu (HERKES İÇİN)

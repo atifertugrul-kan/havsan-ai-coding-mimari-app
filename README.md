@@ -81,12 +81,35 @@ git push
 
 ```mermaid
 graph TD
-    A[Yeni Proje Talebi] --> B[analiz_master.md oluştur]
-    B --> C[İteratif Sorular<br/>5-10 Round]
-    C --> D{Tüm sorular<br/>cevaplandı mı?}
-    D -->|Hayır| C
-    D -->|Evet| E[gereksinim_analizi.md]
-    E --> F[Frontend'e geç]
+    %% Faz 1: Analiz
+    subgraph "Faz 1: Analiz (ZORUNLU)"
+        Start[Yeni Proje Talebi] --> Init[analiz_master.md oluştur]
+        Init --> Loop{İteratif Sorular<br/>5-10 Round}
+        Loop -- Hayır --> Q[Soruları Cevapla]
+        Q --> Loop
+        Loop -- Evet --> PRD[gereksinim_analizi.md]
+    end
+
+    %% Faz 2: Frontend
+    subgraph "Faz 2: Frontend (Dummy Data)"
+        PRD --> FE_Init[Frontend Projesi Başlat]
+        FE_Init --> FE_Dev[UI Geliştirme<br/>(Hardcoded Data)]
+        FE_Dev --> FE_Rev{Kullanıcı Onayı}
+        FE_Rev -- Red --> FE_Dev
+    end
+
+    %% Faz 3: Backend
+    subgraph "Faz 3: Backend & Entegrasyon"
+        FE_Rev -- Onay --> BE_Init[Backend Projesi Başlat]
+        BE_Init --> BE_Dev[API & DB Geliştirme]
+        BE_Dev --> Integ[Frontend <-> Backend Bağlantısı]
+        Integ --> Test[E2E Testler]
+    end
+
+    %% Deployment
+    subgraph "Faz 4: Canlıya Geçiş"
+        Test --> Deploy[Production Deploy]
+    end
 ```
 
 **Kurallar:**
