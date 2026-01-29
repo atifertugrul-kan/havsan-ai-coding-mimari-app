@@ -27,28 +27,126 @@
 
 ---
 
-### Güncelleme İçin
-Aynı dosyayı tekrar çalıştırın. Script kimle çalıştığına bakar:
-- **ATIF ise:** Değişiklikleri Git'e gönderir (**Push**).
-- **Diğerleri ise:** Değişiklikleri çeker (**Pull**).
+## 🔄 Otomatik Güncelleme Sistemi
+
+### Nasıl Çalışır?
+
+Script, **ilk kurulumda** Windows Startup klasörüne otomatik olarak eklenir:
+
+```
+C:\Users\[Kullanıcı]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\
+└── Antigravity-Startup.lnk
+```
+
+**Her bilgisayar açılışında:**
+1. ⏱️ 30 saniye bekler (Windows ağ bağlantısı için)
+2. 🌐 İnternet bağlantısını kontrol eder (8.8.8.8'e ping)
+   - ❌ Bağlantı yoksa: 10 saniye aralıklarla 6 kez dener (toplam 90 saniye)
+   - ❌ Hala yoksa: Sessizce kapanır
+3. ✅ Bağlantı varsa: Git'ten güncel kuralları çeker
+4. 📁 Dosyaları `%USERPROFILE%\.gemini` klasörüne kopyalar
+5. 🎯 Sessizce kapanır
+
+**Kullanıcı deneyimi:** Hiçbir şey görmezsiniz, arka planda otomatik güncellenir! 🚀
 
 ---
 
-## 🔄 Nasıl Çalışır? (Akıllı Senkronizasyon)
+## 🔐 Akıllı Senkronizasyon (Admin vs Developer)
 
-**Merkezi Kural Yönetimi:** Kendi (ATIF) kök kurallarını değiştirdiğinde, bu değişikliklerin tüm ekibi etkilemesi için bir proje geliştirildi.
+Script, Git kullanıcı adına bakarak otomatik karar verir:
 
-**Akıllı Script Mantığı:** `antigravity-kurulum.ps1` dosyası çalıştırıldığında kullanıcıyı ayırt eder:
+| Kullanıcı | Davranış |
+|-----------|----------|
+| **Atif** (Admin) | `git push` - Değişiklikleri gönderir |
+| **Diğerleri** (Developer) | `git pull` - Değişiklikleri çeker |
 
-1.  **Eğer kullanıcı "ATIF" ise:**
-    *   Yerelindeki güncel kök kurallarını okur.
-    *   Git üzerine gönderir (Auto-Push).
-2.  **Eğer kullanıcı başka bir yazılımcı ise:**
-    *   Git üzerindeki güncel kuralları çeker (Auto-Pull).
-    *   Yerel sisteme entegre eder.
+**Sonuç:** Atif yeni bir kural eklediğinde, tüm ekip üyeleri otomatik olarak güncellenir! ✨
 
+---
 
-**Mimari Güncelleme:** `mimari-app` üzerinde bir geliştirme yapıldığında, PowerShell dosyası da otomatik olarak güncellenip Git'e aktarılır.
+## 📂 Dosya Yapısı
+
+```
+havsan-ai-coding-mimari-app/
+├── antigravity-kurulum.bat          # Wrapper (Çift tıkla)
+├── script/
+│   └── antigravity-kurulum.ps1      # Ana PowerShell script
+├── gemini/
+│   ├── GEMINI.dist.md               # Global kurallar (→ %USERPROFILE%\.gemini\GEMINI.md)
+│   ├── KURULUM.md                   # Kurulum rehberi
+│   └── antigravity/
+│       ├── skills/                  # Yetenekler (havsan-appsscript, vb.)
+│       └── workflows/               # İş akışları (analist, backend-architect, vb.)
+└── README.md                        # Bu dosya
+```
+
+---
+
+## 🛠️ Teknik Detaylar
+
+### Özellikler
+- ✅ UTF-8 karakter desteği (Türkçe ve Emoji)
+- ✅ Otomatik PowerShell versiyonu kontrolü
+- ✅ İnternet bağlantısı kontrolü (sadece startup'ta)
+- ✅ Akıllı Git senkronizasyonu (Admin Push / Dev Pull)
+- ✅ Otomatik yedekleme (`%USERPROFILE%\.gemini\backups\`)
+- ✅ IDE otomatik açılma (Antigravity kısayolu)
+- ✅ TopMost popup bildirimi (IDE üstünde kalır)
+- ✅ Tam ekran konsol (180x100)
+
+### Güncellenen Dosyalar
+Script çalıştığında şu dosyalar güncellenir:
+
+```
+C:\Users\[Kullanıcı]\.gemini\
+├── GEMINI.md              # Global kurallar
+├── KURULUM.md             # Kurulum rehberi
+└── antigravity\
+    ├── skills\            # Yetenekler
+    └── workflows\         # İş akışları
+```
+
+---
+
+## 🐛 Sorun Giderme
+
+### "Kaynak yok" Hatası
+- **Neden:** Script `script/` klasöründe değil
+- **Çözüm:** `antigravity-kurulum.bat` dosyasını kullanın (otomatik düzeltir)
+
+### Versiyon Uyumsuzluğu (IDE'de eski versiyon görünüyor)
+- **Neden:** Lokal `.gemini` klasörü güncel değil
+- **Çözüm:** Script'i bir kez daha çalıştırın, sonra IDE'de "Refresh Rules" yapın
+
+### İnternet Bağlantısı Yok
+- **Otomatik Başlangıç:** 90 saniye bekler, sonra kapanır (sessiz)
+- **Manuel Çalıştırma:** Git güncellemesi yapamaz ama mevcut dosyalarla çalışır
+
+---
+
+## 📝 Changelog
+
+### v2.6.6 (Stable)
+- ✅ İnternet bağlantısı kontrolü (startup'ta)
+- ✅ Script `script/` klasörüne taşındı
+- ✅ Popup TopMost (IDE üstünde kalır)
+- ✅ Konsol boyutu optimize edildi (180x100)
+- ✅ Path hesaplama düzeltildi
+
+### v2.6.5
+- ✅ UTF-8 karakter desteği
+- ✅ Akıllı senkronizasyon (Admin Push / Dev Pull)
+
+### v2.6.4
+- ✅ Antigravity IDE kısayolu düzeltildi
+
+---
+
+## 📞 Destek
+
+**Geliştirici:** Atif Ertugrul Kan  
+**Rol:** Kurumsal Geliştirici Altyapı Mimarı & HAVSAN CTO  
+**Organizasyon:** HAVSAN Robotics & AI | Elazığ Organize Sanayi Bölgesi
 
 ---
 
