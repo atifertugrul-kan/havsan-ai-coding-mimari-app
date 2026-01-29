@@ -16,14 +16,8 @@
 
 ## ⚡ 10 Saniyede Kurulum & Güncelleme
 
-### Yöntem 1: Otomatik (Önerilen) ⭐
 1. `antigravity-kurulum.bat` dosyasına **Çift Tıkla**
 2. Bitti! ✅
-
-### Yöntem 2: Manuel (PowerShell)
-1. `script\antigravity-kurulum.ps1` dosyasına **Sağ Tık -> Run with PowerShell**
-
-> **Not:** `.bat` dosyası otomatik olarak PowerShell kontrolü yapar ve güvenlik ayarlarını bypass eder.
 
 ---
 
