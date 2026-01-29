@@ -46,16 +46,30 @@ C:\Users\[Kullanıcı]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Sta
 
 ---
 
-## 🔐 Akıllı Senkronizasyon (Admin vs Developer)
+## 🔐 Akıllı Senkronizasyon (Self-Update + Admin vs Developer)
 
-Script, Git kullanıcı adına bakarak otomatik karar verir:
+Script, **önce kendini günceller**, sonra kullanıcı rolüne göre davranır:
+
+### 1. Kendi Güncellemesi (Her Kullanıcı İçin)
+```
+Git Fetch → Yeni versiyon var mı?
+   ↓ EVET
+Git Pull (proje kökü) → Script'i yeniden başlat → Güncel script çalışır
+   ↓ HAYIR
+Devam et
+```
+
+### 2. Kullanıcı Rolü (Sadece Atif İçin Ekstra)
 
 | Kullanıcı | Davranış |
 |-----------|----------|
-| **Atif** (Admin) | `git push` - Değişiklikleri gönderir |
-| **Diğerleri** (Developer) | `git pull` - Değişiklikleri çeker |
+| **Atif** (Admin) | Pull yaptıktan sonra, yerel değişiklikler varsa `git push` yapar |
+| **Diğerleri** (Developer) | Sadece `git pull` yapar (yukarıdaki adım 1) |
 
-**Sonuç:** Atif yeni bir kural eklediğinde, tüm ekip üyeleri otomatik olarak güncellenir! ✨
+**Sonuç:** 
+- ✅ Herkes her zaman **en güncel script versiyonunu** çalıştırır
+- ✅ Atif yeni bir kural eklediğinde, tüm ekip otomatik güncellenir
+- ✅ Script kendini güncelleyebildiği için, yeni özellikler anında dağıtılır
 
 ---
 
