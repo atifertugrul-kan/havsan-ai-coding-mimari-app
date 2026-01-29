@@ -1,240 +1,91 @@
-# 🚀 HAVSAN Antigravity Konfigürasyon Yönetimi
+# 🚀 HAVSAN Antigravity
 
-**Versiyon:** 1.0.0  
-**Amaç:** HAVSAN ekibi için standart Antigravity IDE konfigürasyonları
-
----
-
-## 📦 Ne İçeriyor?
-
-```
-gemini/                         # Dağıtım Paketi
-└── antigravity/
-    ├── skills/                 # 3 özel yetenek
-    └── workflows/              # 3 iş akışı
-```
-
-**Not:** `GEMINI.md` ve `KURULUM.md` dosyaları **global** olarak `C:\Users\<USERNAME>\.gemini\` altında bulunur.
+**Amaç:** HAVSAN Yapay Zeka & Robotik ekibi için standart geliştirme ortamı.
 
 ---
 
-## ⚡ Hızlı Kurulum
+## ⚡ 10 Saniyede Kurulum
 
-### Herkes İçin (Ekip & Admin)
+**Tek Adım:** 
+`scripts/antigravity-kurulum.ps1` dosyasına **Sağ Tık -> Run with PowerShell**
 
-**Konfigürasyon Kurulumu/Güncelleme:**
-```powershell
-.\scripts\antigravity-kurulum.ps1
-```
-*(Sağ Tık -> Run with PowerShell)*
-# 3. Git commit
-git add .
-git commit -m "feat: Update configurations"
-git push
-```
+*(Bu işlem tüm kuralları yükler ve günceller)*
 
 ---
 
-## 🛡️ HAVSAN Standartları
-
-### 7 Temel Kural
-
-1. **%100 Türkçe** iletişim
-2. **Docker-First** (local kurulum yasak)
-3. **Frontend-First** (Analiz → Frontend → Backend)
-4. **İteratif Analiz** (`analiz_master.md`)
-5. **Güvenli Otonom Çalışma** (kritik işlemlerde onay)
-6. **Teknoloji Hiyerarşisi** (Google → HAVSAN Cloud → Open Source)
-7. **Proje Hafızası** (`.agent/rules/`)
-
-### Git Kontrol (ZORUNLU)
-
-- ❌ `git commit` - SafeToAutoRun: **false** (ONAY GEREKLİ)
-- ❌ `git push` - SafeToAutoRun: **false** (ONAY GEREKLİ)
-- ✅ `git status/diff/log` - Serbest
-
-### Skills
-
-- **havsan-appsscript** - Google Apps Script + Dockerized Clasp
-- **havsan-code-review** - Kod inceleme standartları
-- **havsan-development** - Yeni proje protokolü (ZORUNLU)
-
-### Workflows
-
-- `/analist` - İteratif analiz
-- `/backend-architect` - Backend tasarım
-- `/frontend-design` - Frontend tasarım
-
----
-
-## 🎯 Fullstack Geliştirme Yol Haritası
+## 🎯 Fullstack Geliştirme Haritası
 
 ### Faz 1: Analiz (ZORUNLU)
 
+> **Kural:** `docs/analiz_master.md` tek doğruluk kaynağıdır. Kopyalanmaz!
+
 ```mermaid
 graph TD
-    %% Faz 1: Analiz
-    subgraph "Faz 1: Analiz (ZORUNLU)"
-        Start[Yeni Proje Talebi] --> Init[analiz_master.md oluştur]
-        Init --> Loop{İteratif Sorular<br/>5-10 Round}
-        Loop -- Hayır --> Q[Soruları Cevapla]
-        Q --> Loop
-        Loop -- Evet --> PRD[gereksinim_analizi.md]
-        
-        note right of PRD
-            Tek Doğruluk Kaynağı
-            (Kopyalanmaz, Referans Verilir)
-        end
-    end
-
-    %% Faz 2: Frontend
-    subgraph "Faz 2: Frontend (Dummy Data)"
-        PRD --> FE_Init[Frontend Projesi Başlat]
-        FE_Init --> FE_Dev[UI Geliştirme<br/>(Hardcoded Data)]
-        FE_Dev --> FE_Rev{Kullanıcı Onayı}
-        FE_Rev -- Red --> FE_Dev
-    end
-
-    %% Faz 3: Backend
-    subgraph "Faz 3: Backend & Entegrasyon"
-        FE_Rev -- Onay --> BE_Init[Backend Projesi Başlat]
-        BE_Init --> BE_Dev[API & DB Geliştirme]
-        BE_Dev --> Integ[Frontend <-> Backend Bağlantısı]
-        Integ --> Test[E2E Testler]
-    end
-
-    %% Deployment
-    subgraph "Faz 4: Canlıya Geçiş"
-        Test --> Deploy[Production Deploy]
+    Start[Yeni Proje] --> Init[analiz_master.md]
+    Init --> Loop{İteratif Sorular}
+    Loop -- Hayır --> Q[Cevapla]
+    Q --> Loop
+    Loop -- Evet --> PRD[gereksinim_analizi.md]
+    
+    note right of PRD
+        Tek Kaynak
+        (Kopyalamak YASAK)
     end
 ```
-
-**Kurallar:**
-- ❌ `frontend/` veya `backend/` klasörü **AÇILMAZ**
-- ✅ Tek dosya: `docs/analiz_master.md`
-- ✅ Checkbox takip: `- [ ]` → `- [x]`
-- ✅ IDE yorumları: `<!-- YANIT: ... -->`
 
 ### Faz 2: Frontend (Dummy Data)
 
-```mermaid
-graph TD
-    A[Analiz Onaylandı] --> B[frontend/ klasörü oluştur]
-    B --> C[Docker Compose<br/>React/Next.js]
-    C --> D[UI Bileşenleri<br/>Dummy Data ile]
-    D --> E{Frontend<br/>%100 tamamlandı mı?}
-    E -->|Hayır| D
-    E -->|Evet| F[Backend'e geç]
-```
-
-**Kurallar:**
-- ✅ `docker-compose.yml` ile izole ortam
-- ✅ %100 dummy data (mock API)
-- ❌ Backend'e **DOKUNULMAZ**
-- ❌ Analiz dosyaları buraya **KOPYALANMAZ** (docs/ referans alınır)
-
-### Faz 3: Backend (Gerçek Veri)
+> **Kural:** Backend yokmuş gibi çalış. %100 Mock Data.
 
 ```mermaid
 graph TD
-    A[Frontend Tamamlandı] --> B[backend/ klasörü oluştur]
-    B --> C[Docker Compose<br/>API + DB]
-    C --> D[Gerçek API<br/>Endpoints]
-    D --> E[Frontend<br/>Entegrasyonu]
-    E --> F[Test & Deploy]
+    PRD[Analiz Bitti] --> FE[Frontend Başlat]
+    FE --> Dev[UI Geliştirme]
+    Dev --> Rev{Onay?}
+    Rev -- Red --> Dev
+    Rev -- Onay --> Next[Backend'e Geç]
 ```
 
-**Kurallar:**
-- ✅ Frontend ile aynı `docker-compose.yml`
-- ✅ PostgreSQL/MongoDB container
-- ✅ API dokümantasyonu
-- ❌ Analiz dosyaları buraya **KOPYALANMAZ**
+### Faz 3: Backend & Entegrasyon
 
----
+> **Kural:** Frontend onayı almadan Backend yazılmaz.
 
-## 📂 Proje Klasör Yapısı
-
-### Analiz Aşaması
-
-```
-proje-adi/
-├── .agent/
-│   └── rules/
-├── docs/
-│   └── analiz_master.md        ← Tek dosya
-└── docker-compose.yml          ← Henüz yok
-```
-
-### Frontend Aşaması
-
-```
-proje-adi/
-├── docs/
-│   ├── analiz_master.md
-│   └── gereksinim_analizi.md   ← Onaylanmış analiz
-├── frontend/
-│   ├── src/
-│   ├── public/
-│   └── Dockerfile
-├── docker-compose.yml          ← Frontend container
-└── .gitignore
-```
-
-### Backend Aşaması
-
-```
-proje-adi/
-├── docs/
-├── frontend/
-├── backend/
-│   ├── src/
-│   ├── tests/
-│   └── Dockerfile
-├── docker-compose.yml          ← Frontend + Backend + DB
-└── README.md
+```mermaid
+graph TD
+    FE_OK[Frontend Onaylı] --> BE[Backend Başlat]
+    BE --> API[API & DB]
+    API --> Integ[Entegrasyon]
+    Integ --> Live[Canlıya Geçiş]
 ```
 
 ---
 
-## 🔧 Yönetim Scriptleri
+## 🛡️ 7 Altın Kural
 
-| Script | Amaç |
-|--------|------|
-| `antigravity-kurulum.ps1` | Proje → .gemini otomatik kurulum ve güncelleme |
+1. **%100 Türkçe** 🇹🇷
+2. **Docker-First** (Local yasak) 🐳
+3. **Frontend-First** (Önce UI) 🎨
+4. **İteratif Analiz** (`analiz_master.md`) 📝
+5. **Onaylı Git** (Commit yasak, onay şart) 🛑
+6. **Teknoloji:** Google > HAVSAN > Open Source ☁️
+7. **Hafıza:** Kuralları `.agent/rules/` içine yaz 🧠
 
-**Kullanım:**
-```powershell
-.\scripts\antigravity-kurulum.ps1
+---
+
+## ⚙️ IDE Ayarı (Bunu Yapmazsan Çalışmaz!)
+
+Antigravity IDE sağ üstten **Settings**:
+1. **Auto Execution:** `Ask` (Always Proceed YAPMA)
+2. **Review Policy:** `Ask` (Always Proceed YAPMA)
+
+---
+
+## 📂 Klasör Yapısı
+
 ```
-
----
-
-## ⚙️ IDE Ayarları (ÖNEMLİ)
-
-Git kontrol kurallarının çalışması için IDE ayarlarını değiştir:
-
-### Antigravity IDE → Settings
-
-1. **Auto Execution:** `Always Proceed` → `Ask`
-2. **Review Policy:** `Always Proceed` → `Ask`
-
-Bu ayarlar, IDE'nin Git commit/push için **mutlaka onay istemesini** sağlar.
-
----
-
-## 📚 Dokümantasyon
-
-- **[C:\Users\HP\.gemini\GEMINI.md](file:///C:/Users/HP/.gemini/GEMINI.md)** - Global Rules
-- **[C:\Users\HP\.gemini\KURULUM.md](file:///C:/Users/HP/.gemini/KURULUM.md)** - Kurulum + Proje Başlatma
-- **[scripts/README.md](scripts/README.md)** - Script kullanım rehberi
-
----
-
-## 🆘 Destek
-
-- **Atıf Ertuğrul Kan:** atifertugrul.kan@havsanrobotik.com.tr
-- **Slack:** `#antigravity-destek`
-
----
-
-**🎯 Misyon:** Tüm HAVSAN ekibinin aynı standartlarda, profesyonel AI-assisted coding yapması!
+proje/
+├── docs/               # Analiz (TEK KAYNAK)
+├── frontend/           # React/Next.js
+├── backend/            # FastAPI/Node.js
+└── docker-compose.yml  # Tüm sistem
+```
