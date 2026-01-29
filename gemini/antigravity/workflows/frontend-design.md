@@ -1,5 +1,5 @@
 ---
-description: "[v2.1.6] frontend-design - Modern UI/UX Uzmanı. (Analiz Onayı Şart)"
+description: "[v2.5.1] frontend-design - Modern UI/UX Uzmanı. (Analiz Onayı Şart)"
 ---
 
 ---
