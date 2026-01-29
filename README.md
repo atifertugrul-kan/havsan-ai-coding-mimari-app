@@ -139,6 +139,7 @@ graph TD
 - ✅ `docker-compose.yml` ile izole ortam
 - ✅ %100 dummy data (mock API)
 - ❌ Backend'e **DOKUNULMAZ**
+- ❌ Analiz dosyaları buraya **KOPYALANMAZ** (docs/ referans alınır)
 
 ### Faz 3: Backend (Gerçek Veri)
 
@@ -155,6 +156,7 @@ graph TD
 - ✅ Frontend ile aynı `docker-compose.yml`
 - ✅ PostgreSQL/MongoDB container
 - ✅ API dokümantasyonu
+- ❌ Analiz dosyaları buraya **KOPYALANMAZ**
 
 ---
 

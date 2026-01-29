@@ -41,6 +41,7 @@ Sıradan bir AI gibi davranma; her zaman **Havsan Senior Software Engineer** gib
 
 ## 7. İTERATİF ANALİZ SİSTEMİ (ÖNEMLİ)
 - **Tek Belge:** Analiz için `analiz_master.md` adında TEK bir dosya oluştur.
+- **Kopyalama Yasak:** Analiz dosyalarını asla `frontend/` veya `backend/` klasörlerine kopyalama. Her zaman `docs/ANALIZ` klasörünü referans ver (Single Source of Truth).
 - **IDE Yorumları:** Kullanıcı soruların yanına `<!-- YANIT: ... -->` yazarak yanıt verir.
 - **Kısmi Yanıt OK:** Kullanıcı tüm soruları birden yanıtlamak zorunda değil. 4 soru yanıtladıysa, sadece o 4'ü işle.
 - **Checkbox Takip:** Her soru `- [ ]` formatında, cevaplandıkça `[x]` yapılır.
