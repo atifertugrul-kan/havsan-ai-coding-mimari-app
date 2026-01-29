@@ -14,6 +14,17 @@ try {
     function Write-Error { param([string]$msg) Write-Host "[ERROR] $msg" -ForegroundColor Red }
     function Write-Debug { param([string]$msg) Write-Host "[DEBUG] $msg" -ForegroundColor DarkGray }
 
+    
+    # ==========================================
+    # PENCEREYI TAM EKRAN YAP (Maximize)
+    # ==========================================
+    $memberDefinition = @'
+    [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+'@
+    $win32 = Add-Type -MemberDefinition $memberDefinition -Name "Win32ShowWindowAsync" -Namespace Win32Functions -PassThru
+    $hwnd = (Get-Process -Id $PID).MainWindowHandle
+    if ($hwnd -ne [IntPtr]::Zero) { $win32::ShowWindow($hwnd, 3) } # 3 = SW_MAXIMIZE
+
     Clear-Host
     
     # Global degiskenleri en basta tanimla
@@ -32,8 +43,8 @@ try {
         Write-Progress -Activity "Antigravity Yukleniyor..." -Status "$percent% - $activity" -PercentComplete $percent
     }
     
-    # Logo Yazdirma
-    Write-Host "
+    # Logo Yazdirma (Here-String ile bozulmayi onle)
+    $logo = @'
   _   _    _ __     __ ___    _    _   _ 
  | | | |  / \\ \   / // __|  / \  | \ | |
  | |_| | / _ \\ \ / / \__ \ / _ \ |  \| |
@@ -41,8 +52,10 @@ try {
  |_| |_/_/   \_\\_/   |___/_/   \_\_| \_|
                                          
       Robotik & Yapay Zeka
-      v2.1.2 (Patched)
-" -ForegroundColor Cyan
+      v2.1.3 (Maximized)
+    
+'@
+    Write-Host $logo -ForegroundColor Cyan
 
     Write-Host "    Atif Ertugrul Kan" -ForegroundColor Yellow
     Write-Host "    Kurumsal Gelistirici Altyapi Mimari & HAVSAN CTO" -ForegroundColor DarkGray
