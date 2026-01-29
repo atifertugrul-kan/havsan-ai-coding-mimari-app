@@ -25,7 +25,7 @@ try {
  |_| |_/_/   \_\\_/   |___/_/   \_\_| \_|
                                          
       Robotik & Yapay Zeka
-      v2.1.0 (Sync Rules)
+      v2.1.1 (Doc Fixes)
 " -ForegroundColor Cyan
 
     Write-Header "HAVSAN Antigravity Kurulum ve Guncelleme"

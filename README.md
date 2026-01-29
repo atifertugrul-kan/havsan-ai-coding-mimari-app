@@ -10,7 +10,7 @@
 
 # 🚀 HAVSAN Antigravity
 
-**Versiyon:** 2.1.0 (Sync Rules)
+**Versiyon:** 2.1.1 (Doc Fixes)
 **Amaç:** HAVSAN Yapay Zeka & Robotik ekibi için standart geliştirme ortamı.
 
 ---
@@ -21,9 +21,9 @@
 1. `scripts/antigravity-kurulum.ps1` dosyasına **Sağ Tık -> Run with PowerShell**
 
 ### Atıf Yeni Kural Eklediğinde? (Güncelleme)
-1. IDE'den **Git Pull** yap (veya `git pull` yaz).
-2. `scripts/antigravity-kurulum.ps1` çalıştır.
-3. Bitti! ✅
+1. `scripts/antigravity-kurulum.ps1` çalıştır.
+*(Script **OTOMATİK** olarak Git Pull yapar ve günceller)*
+2. Bitti! ✅
 
 ---
 
