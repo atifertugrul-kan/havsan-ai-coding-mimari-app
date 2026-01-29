@@ -28,6 +28,12 @@ Write-Host "
 Write-Host "`n=== HAVSAN Antigravity Hizli Guncelleme ===" -ForegroundColor Magenta
 Write-Host "===============================================`n" -ForegroundColor Magenta
 
+Write-Host "Bu script ne yapiyor?" -ForegroundColor Yellow
+Write-Host "- Projedeki guncel ayarlari (gemini klasoru) alir." -ForegroundColor Gray
+Write-Host "- Senin lokal .gemini klasorune uygular." -ForegroundColor Gray
+Write-Host "- Boylelice projedeki kurallar IDE'nde aktif olur." -ForegroundColor Gray
+Write-Host ""
+
 $PROJECT_ROOT = Split-Path -Parent $PSScriptRoot
 $SOURCE_DIR = "$PROJECT_ROOT\gemini"
 $TARGET_DIR = "$env:USERPROFILE\.gemini"

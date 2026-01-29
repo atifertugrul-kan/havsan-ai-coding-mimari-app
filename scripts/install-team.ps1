@@ -29,6 +29,13 @@ try {
 
     Write-Header "HAVSAN Antigravity Kurulum Sihirbazi"
 
+    Write-Host "Bu sihirbaz ne yapiyor?" -ForegroundColor Yellow
+    Write-Host "1. Antigravity IDE kurallarini (Rules, Skills, Workflows) yukler." -ForegroundColor Gray
+    Write-Host "2. Ekip icinde 'Coding Standard' birligi saglar." -ForegroundColor Gray
+    Write-Host "3. Manuel kopyalama hatalarini onler." -ForegroundColor Gray
+    Write-Host "Neden gerekli?" -ForegroundColor Yellow
+    Write-Host "  Proje standartlarinin herkes icin ayni olmasini garanti etmek icin." -ForegroundColor Gray
+
     # Dizinleri Belirleme
     $SCRIPT_DIR = $PSScriptRoot
     $PROJECT_ROOT = Split-Path -Parent $SCRIPT_DIR
