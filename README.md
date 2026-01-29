@@ -20,21 +20,13 @@ gemini/                         # Dağıtım Paketi
 
 ## ⚡ Hızlı Kurulum
 
-### Ekip Üyesi
+### Herkes İçin (Ekip & Admin)
 
-1. `gemini/antigravity/` klasörünü kopyala
-2. `C:\Users\<KULLANICI_ADIN>\.gemini\antigravity\` altına yapıştır
-3. Antigravity IDE'yi yeniden başlat
-
-**Global Dosyalar:** `GEMINI.md` ve `KURULUM.md` Atıf tarafından paylaşılır.
-
-### Atıf (Yönetici)
-
-**Konfigürasyon Güncelleme:**
+**Konfigürasyon Kurulumu/Güncelleme:**
 ```powershell
-# 1. C:\Users\HP\.gemini\ altındaki dosyaları düzenle
-# 2. Hızlı güncelleme
-.\scripts\guncelle.ps1
+.\scripts\antigravity-kurulum.ps1
+```
+*(Sağ Tık -> Run with PowerShell)*
 # 3. Git commit
 git add .
 git commit -m "feat: Update configurations"
@@ -208,11 +200,11 @@ proje-adi/
 
 | Script | Amaç |
 |--------|------|
-| `guncelle.ps1` | Proje → .gemini otomatik senkronizasyon |
+| `antigravity-kurulum.ps1` | Proje → .gemini otomatik kurulum ve güncelleme |
 
 **Kullanım:**
 ```powershell
-.\scripts\guncelle.ps1
+.\scripts\antigravity-kurulum.ps1
 ```
 
 ---

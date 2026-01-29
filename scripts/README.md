@@ -22,30 +22,22 @@ Script dosyasına sağ tıklayıp "Run with PowerShell" deyin.
 
 ## 📝 Scriptler
 
-### `install-team.ps1` - Ekip Kurulumu (HERKES İÇİN)
-
-**Amaç:** Ekip üyelerinin Antigravity ortamını tek tıkla kurmasını sağlar.
-
-**Kullanım:**
-Script dosyasına sağ tıklayıp "Run with PowerShell" deyin.
-
-**Ne Yapar:**
-1. ✅ `gemini/GEMINI.dist.md` → `.gemini/GEMINI.md` (Adını düzelterek kopyalar)
-2. ✅ `gemini/KURULUM.md` → `.gemini/KURULUM.md`
-3. ✅ `gemini/antigravity/` → `.gemini/antigravity/`
-
----
-
-### `guncelle.ps1` - Hızlı Güncelleme (ATIF İÇİN)
-
-**Amaç:** Geliştirme yaparken proje klasöründen lokal `.gemini` klasörüne hızlı senkronizasyon.
+### `antigravity-kurulum.ps1` - Kurulum ve Güncelleme Sihirbazı
+**Amaç:** Antigravity IDE kurallarını yüklemek veya güncellemek için kullanılan **TEK** araçtır. Hem ilk kurulum hem de güncelleme için kullanılır.
 
 **Kullanım:**
 *Windows Dosya Gezgini'nde dosyaya sağ tıklayıp **"Run with PowerShell"** seçeneğini kullanın.*
 
 ```powershell
-.\scripts\guncelle.ps1
+.\scripts\antigravity-kurulum.ps1
 ```
+
+**Ne Yapar:**
+- `.gemini` klasörünü kontrol eder ve oluşturur.
+- Mevcut kurallar (`backups/` altına) yedekler.
+- Global kuralları (`GEMINI.md`) yükler/günceller.
+- Skills ve Workflows dosyalarını senkronize eder.
+- "Path Too Long" hatalarını önlemek için gereksiz klasörleri atlar.
 
 **Ne Yapar:**
 1. ✅ Mevcut `.gemini/` yedeğini alır

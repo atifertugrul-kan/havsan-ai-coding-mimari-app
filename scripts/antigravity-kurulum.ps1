@@ -1,5 +1,5 @@
 # ============================================
-# HAVSAN Antigravity - Ekip Kurulum Scripti
+# HAVSAN Antigravity - Kurulum ve Guncelleme
 # ============================================
 # Kullanim: Sag Tik -> Run with PowerShell
 # ============================================
@@ -27,14 +27,13 @@ try {
       Robotik & Yapay Zeka
 " -ForegroundColor Cyan
 
-    Write-Header "HAVSAN Antigravity Kurulum Sihirbazi"
+    Write-Header "HAVSAN Antigravity Kurulum ve Guncelleme"
 
     Write-Host "Bu sihirbaz ne yapiyor?" -ForegroundColor Yellow
-    Write-Host "1. Antigravity IDE kurallarini (Rules, Skills, Workflows) yukler." -ForegroundColor Gray
-    Write-Host "2. Ekip icinde 'Coding Standard' birligi saglar." -ForegroundColor Gray
-    Write-Host "3. Manuel kopyalama hatalarini onler." -ForegroundColor Gray
-    Write-Host "Neden gerekli?" -ForegroundColor Yellow
-    Write-Host "  Proje standartlarinin herkes icin ayni olmasini garanti etmek icin." -ForegroundColor Gray
+    Write-Host "1. Antigravity IDE kurallarini (Rules, Skills, Workflows) yukler veya gunceller." -ForegroundColor Gray
+    Write-Host "2. Proje standartlarinin herkes icin ayni olmasini saglar." -ForegroundColor Gray
+    Write-Host "3. Eski ayarlari otomatik yedekler." -ForegroundColor Gray
+    Write-Host ""
 
     # Dizinleri Belirleme
     $SCRIPT_DIR = $PSScriptRoot
@@ -59,9 +58,11 @@ try {
         Write-Warning "Antigravity IDE klasoru bulunamadi."
         Write-Info "Klasor olusturuluyor..."
         New-Item -ItemType Directory -Force -Path $TARGET_DIR | Out-Null
+        $isUpdate = $false
     }
     else {
-        Write-Success "Hedef klasor mevcut."
+        Write-Success "Hedef klasor mevcut (Guncelleme Modu)."
+        $isUpdate = $true
     }
 
     # ============================================
@@ -70,7 +71,8 @@ try {
     Write-Header "2. Yedekleme"
 
     $timestamp = Get-Date -Format 'yyyy-MM-dd_HH-mm-ss'
-    $BACKUP_DIR = "$TARGET_DIR\backups\kurulum_oncesi_$timestamp"
+    $actionType = if ($isUpdate) { "guncelleme" } else { "kurulum" }
+    $BACKUP_DIR = "$TARGET_DIR\backups\${actionType}_oncesi_$timestamp"
     
     Write-Debug "Yedek klasoru olusturuluyor: $BACKUP_DIR"
     New-Item -ItemType Directory -Force -Path $BACKUP_DIR | Out-Null
@@ -102,7 +104,7 @@ try {
     }
 
     # ============================================
-    # Adim 3: Kurulum
+    # Adim 3: Yukleme / Guncelleme
     # ============================================
     Write-Header "3. Dosyalar Yukleniyor"
 
@@ -175,8 +177,7 @@ try {
     # Bitis
     # ============================================
     if ($filesCopied -gt 0) {
-        Write-Header "KURULUM BASARILI! ($filesCopied oge)"
-        Write-Info "Lutfen Antigravity IDE'yi yeniden baslatin."
+        Write-Header "ISLEM BASARILI! ($filesCopied oge)"
         
         Write-Host "`nONEMLI HATIRLATMA:" -ForegroundColor Yellow
         Write-Host "  1. Antigravity IDE'ye git" -ForegroundColor Cyan
