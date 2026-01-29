@@ -39,7 +39,7 @@ graph TD
     Init --> Loop{İteratif Sorular}
     Loop -- Hayır --> Q[Cevapla]
     Q --> Loop
-    Loop -- Evet --> PRD[gereksinim_analizi.md<br/>(Tek Kaynak - Kopyalamak YASAK)]
+    Loop -- Evet --> PRD["gereksinim_analizi.md<br/>(Tek Kaynak - Kopyalamak YASAK)"]
     
     style PRD fill:#f9f,stroke:#333,stroke-width:2px
 ```
