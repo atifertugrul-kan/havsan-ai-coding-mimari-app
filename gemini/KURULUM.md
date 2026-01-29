@@ -256,36 +256,198 @@ Sorun devam ediyorsa:
 
 ---
 
+## 🚀 Yeni Proje Başlatma Promptu
+
+Kurulum tamamlandı! Şimdi yeni bir proje başlatmak için aşağıdaki promptu kullan:
+
+### 📋 Proje Başlatma Şablonu
+
+```
+Yeni bir fullstack proje başlatmak istiyorum.
+
+Proje Adı: [PROJE_ADI]
+Müşteri: [MÜŞTERİ_ADI]
+Kısa Açıklama: [1-2 CÜMLE]
+
+HAVSAN standartlarına göre ilerleyelim:
+1. Önce analiz aşamasını tamamlayalım (analiz_master.md)
+2. Analiz onaylandıktan sonra frontend (dummy data ile)
+3. Frontend tamamlandıktan sonra backend
+
+Docker-first yaklaşımı kullan, local kurulum yasak.
+```
+
+### 💡 Örnek Prompt
+
+```
+Yeni bir fullstack proje başlatmak istiyorum.
+
+Proje Adı: kutuphane-yonetim-sistemi
+Müşteri: İstanbul Belediyesi Kütüphaneler Müdürlüğü
+Kısa Açıklama: Kütüphane üyelerinin kitap ödünç alma, iade ve rezervasyon işlemlerini dijitalleştiren web uygulaması.
+
+HAVSAN standartlarına göre ilerleyelim:
+1. Önce analiz aşamasını tamamlayalım (analiz_master.md)
+2. Analiz onaylandıktan sonra frontend (dummy data ile)
+3. Frontend tamamlandıktan sonra backend
+
+Docker-first yaklaşımı kullan, local kurulum yasak.
+```
+
+---
+
+## 🎯 HAVSAN Fullstack Geliştirme Süreci
+
+### Faz 1: Analiz (ZORUNLU) 📊
+
+**Ne Olur:**
+- Agent `docs/analiz_master.md` oluşturur
+- 5-10 round iteratif sorular sorar
+- Sen IDE'de `<!-- YANIT: ... -->` ile cevaplarsın
+- Checkbox takip: `- [ ]` → `- [x]`
+
+**Klasör Yapısı:**
+```
+proje-adi/
+├── .agent/
+│   └── rules/
+└── docs/
+    └── analiz_master.md        ← Tek dosya
+```
+
+**Kurallar:**
+- ❌ `frontend/` veya `backend/` klasörü **AÇILMAZ**
+- ✅ Tüm sorular cevaplandıktan sonra `gereksinim_analizi.md` oluşturulur
+- ✅ Analiz onaylandıktan sonra Faz 2'ye geçilir
+
+**Örnek Sorular:**
+- Kullanıcı rolleri neler? (Üye, Kütüphaneci, Admin)
+- Kitap rezervasyon süresi kaç gün?
+- Ödeme sistemi olacak mı?
+- Mobil uygulama gerekli mi?
+
+---
+
+### Faz 2: Frontend (Dummy Data) 🎨
+
+**Ne Olur:**
+- `frontend/` klasörü oluşturulur
+- `docker-compose.yml` ile React/Next.js container
+- Tüm UI bileşenleri **dummy data** ile çalışır
+- Backend'e **DOKUNULMAZ**
+
+**Klasör Yapısı:**
+```
+proje-adi/
+├── docs/
+│   ├── analiz_master.md
+│   └── gereksinim_analizi.md
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── mock/              ← Dummy data
+│   ├── Dockerfile
+│   └── package.json
+├── docker-compose.yml
+└── .gitignore
+```
+
+**Kurallar:**
+- ✅ `docker compose up` ile çalışır
+- ✅ Mock API (json-server veya MSW)
+- ✅ %100 dummy data ile tamamlanır
+- ❌ Backend'e geçiş **YASAK** (Frontend %100 bitene kadar)
+
+**Örnek Dummy Data:**
+```javascript
+// frontend/src/mock/books.js
+export const mockBooks = [
+  { id: 1, title: "1984", author: "George Orwell", available: true },
+  { id: 2, title: "Suç ve Ceza", author: "Dostoyevski", available: false }
+];
+```
+
+---
+
+### Faz 3: Backend (Gerçek Veri) 🔧
+
+**Ne Olur:**
+- `backend/` klasörü oluşturulur
+- `docker-compose.yml` güncellenir (API + DB)
+- Gerçek API endpoints
+- Frontend dummy data → gerçek API'ye bağlanır
+
+**Klasör Yapısı:**
+```
+proje-adi/
+├── docs/
+├── frontend/
+├── backend/
+│   ├── src/
+│   │   ├── routes/
+│   │   ├── controllers/
+│   │   ├── models/
+│   │   └── db/
+│   ├── Dockerfile
+│   └── package.json
+├── docker-compose.yml          ← Frontend + Backend + PostgreSQL
+└── README.md
+```
+
+**docker-compose.yml Örneği:**
+```yaml
+version: '3.8'
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+  
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+  
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: kutuphane
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+```
+
+**Kurallar:**
+- ✅ RESTful API veya GraphQL
+- ✅ PostgreSQL/MongoDB container
+- ✅ API dokümantasyonu (Swagger/Postman)
+- ✅ Frontend entegrasyonu (mock data kaldırılır)
+
+---
+
 ## 🎓 Sonraki Adımlar
 
-Kurulum başarılı! Şimdi ne yapmalısın?
+### 1. İlk Projeyi Başlat
 
-### 1. Dokümantasyonu Oku
+Yukarıdaki **Proje Başlatma Şablonu**'nu kullan.
 
-- [README.md](README.md) - Genel bakış
-- [CHANGELOG.md](../CHANGELOG.md) - Versiyon geçmişi
+### 2. Workflows'u Keşfet
 
-### 2. İlk Projeyi Başlat
-
-Yeni bir proje başlatarak HAVSAN standartlarını test et:
-
-```
-Yeni bir web uygulaması geliştirmek istiyorum.
-Müşteri: Kütüphane yönetim sistemi
-```
-
-Agent otomatik olarak:
-- ✅ İteratif analiz başlatacak
-- ✅ Docker-first yaklaşımı uygulayacak
-- ✅ Frontend-first süreç takip edecek
-
-### 3. Workflows'u Keşfet
-
-Slash komutlarını dene:
-
-- `/analist` - Derinlemesine analiz
-- `/backend-architect` - Backend tasarım
+- `/analist` - İteratif analiz uzmanı
+- `/backend-architect` - Backend mimari tasarım
 - `/frontend-design` - Frontend tasarım
+
+### 3. Dokümantasyonu Oku
+
+- [README.md](../README.md) - Fullstack yol haritası
+- [CHANGELOG.md](../CHANGELOG.md) - Versiyon geçmişi
 
 ---
 
