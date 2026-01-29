@@ -84,11 +84,36 @@ try {
     }
     else { Log-S "Startup kaydi mevcut" }
 
-    # Step 1: Git Update
-    Log-H "1. Proje Guncelleniyor"
-    if (Test-Path "$ROOT\.git") { 
-        $out = git -C "$ROOT" pull 2>&1
-        if ($LASTEXITCODE -eq 0) { Log-S "Guncellendi" } else { Log-W "Yerel modla devam." }
+    # Step 1: Smart Git Sync (Atif vs Others)
+    Log-H "1. Proje Guncelleniyor (Akilli Senkronizasyon)"
+    if (Test-Path "$ROOT\.git") {
+        $git_user = git -C "$ROOT" config user.name
+        
+        # IDENTIFY USER: ATIF (Admin) vs Developer
+        if ($git_user -match "atif" -or $git_user -match "Atif") { 
+            Log-I "Yonetici Modu Tespiti: $git_user (PUSH Modu)"
+            
+            # Sync First (Pull)
+            Log-I "Once guncel versiyon cekiliyor..."
+            git -C "$ROOT" pull 2>&1 | Out-Null
+            
+            # Check for Changes
+            if (git -C "$ROOT" status --porcelain) {
+                Log-I "Yerel degisiklikler tespit edildi, gonderiliyor..."
+                git -C "$ROOT" add .
+                git -C "$ROOT" commit -m "auto: Rules Update by Admin ($git_git_user)"
+                git -C "$ROOT" push origin main
+                Log-S "Kurallar Git'e PUSH edildi."
+            }
+            else {
+                Log-S "Gonderilecek degisiklik yok."
+            }
+        }
+        else {
+            Log-I "Gelistirici Modu: $git_user (PULL Modu)"
+            $out = git -C "$ROOT" pull 2>&1
+            if ($LASTEXITCODE -eq 0) { Log-S "Kurallar Guncellendi" } else { Log-W "Yerel modla devam." }
+        }
     }
 
     # Step 2: Checks

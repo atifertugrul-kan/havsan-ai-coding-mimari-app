@@ -19,10 +19,30 @@
 ### İlk Kurulum
 1. `scripts/antigravity-kurulum.ps1` dosyasına **Sağ Tık -> Run with PowerShell**
 
+
 ### Atıf Yeni Kural Eklediğinde? (Güncelleme)
 1. `scripts/antigravity-kurulum.ps1` çalıştır.
-*(Script **OTOMATİK** olarak Git Pull yapar ve günceller)*
-2. Bitti! ✅
+2. Script kimle çalıştığına bakar:
+   - **ATIF ise:** Değişiklikleri Git'e gönderir (**Push**).
+   - **Diğerleri ise:** Değişiklikleri çeker (**Pull**).
+3. Bitti! ✅
+
+---
+
+## 🔄 Nasıl Çalışır? (Akıllı Senkronizasyon)
+
+**Merkezi Kural Yönetimi:** Kendi (ATIF) kök kurallarını değiştirdiğinde, bu değişikliklerin tüm ekibi etkilemesi için bir proje geliştirildi.
+
+**Akıllı Script Mantığı:** `antigravity-kurulum.ps1` dosyası çalıştırıldığında kullanıcıyı ayırt eder:
+
+1.  **Eğer kullanıcı "ATIF" ise:**
+    *   Yerelindeki güncel kök kurallarını okur.
+    *   Git üzerine gönderir (Auto-Push).
+2.  **Eğer kullanıcı başka bir yazılımcı ise:**
+    *   Git üzerindeki güncel kuralları çeker (Auto-Pull).
+    *   Yerel sisteme entegre eder.
+
+**Mimari Güncelleme:** `mimari-app` üzerinde bir geliştirme yapıldığında, PowerShell dosyası da otomatik olarak güncellenip Git'e aktarılır.
 
 ---
 
