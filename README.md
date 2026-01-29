@@ -37,9 +37,10 @@ C:\Users\[Kullanıcı]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Sta
 2. 🌐 İnternet bağlantısını kontrol eder (8.8.8.8'e ping)
    - ❌ Bağlantı yoksa: 10 saniye aralıklarla 6 kez dener (toplam 90 saniye)
    - ❌ Hala yoksa: Sessizce kapanır
-3. ✅ Bağlantı varsa: Git'ten güncel kuralları çeker
-4. 📁 Dosyaları `%USERPROFILE%\.gemini` klasörüne kopyalar
-5. 🎯 Sessizce kapanır
+3. 🔄 **Kendi Güncellemesi:** Git'ten proje güncellemelerini çeker (script dahil)
+4. 🔁 **Yeni versiyon varsa:** Script'i yeniden başlatır (güncel versiyon çalışır)
+5. 📁 Dosyaları `%USERPROFILE%\.gemini` klasörüne kopyalar
+6. 🎯 Sessizce kapanır
 
 **Kullanıcı deneyimi:** Hiçbir şey görmezsiniz, arka planda otomatik güncellenir! 🚀
 
