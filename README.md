@@ -3,14 +3,13 @@
  | | | |  / \\ \   / // __|  / \  | \ | |
  | |_| | / _ \\ \ / / \__ \ / _ \ |  \| |
  |  _  |/ ___ \\ V /  |___// ___ \| |\  |
- |_| |_/_/   \_\\_/   |___/_/   \_\_| \_|
+ |_| |_/_/   \_\\_/   |___/_/   \_\_| \_| Robotics & AI | ELAZIG ORGANIZE SANAYI BOLGESI
                                          
-      Robotik & Yapay Zeka
 ```
 
 # 🚀 HAVSAN Antigravity
 
-**Versiyon:** 2.6.3 (Shortcut Fix)
+**Versiyon:** 2.6.4 (Shortcut Fix)
 **Amaç:** HAVSAN Yapay Zeka & Robotik ekibi için standart geliştirme ortamı.
 
 ---
