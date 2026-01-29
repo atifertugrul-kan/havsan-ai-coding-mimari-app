@@ -6,13 +6,13 @@
 
 # Pencerenin hemen kapanmamasi icin hata yakalama blogu
 try {
-    # Renkli konsol ciktisi fonksiyonlari
-    function Write-Header { param([string]$msg) Write-Host "`n=== $msg ===" -ForegroundColor Magenta }
-    function Write-Success { param([string]$msg) Write-Host "[OK] $msg" -ForegroundColor Green }
-    function Write-Info { param([string]$msg) Write-Host "[INFO] $msg" -ForegroundColor Cyan }
-    function Write-Warning { param([string]$msg) Write-Host "[WARN] $msg" -ForegroundColor Yellow }
-    function Write-Error { param([string]$msg) Write-Host "[ERROR] $msg" -ForegroundColor Red }
-    function Write-Debug { param([string]$msg) Write-Host "[DEBUG] $msg" -ForegroundColor DarkGray }
+    # Renkli konsol ciktisi fonksiyonlari (Progress bar ile cakismamasi icin once bos satir)
+    function Write-Header { param([string]$msg) Write-Host "`n"; Write-Host "=== $msg ===" -ForegroundColor Magenta }
+    function Write-Success { param([string]$msg) Write-Host "`n"; Write-Host "[OK] $msg" -ForegroundColor Green }
+    function Write-Info { param([string]$msg) Write-Host "`n"; Write-Host "[INFO] $msg" -ForegroundColor Cyan }
+    function Write-Warning { param([string]$msg) Write-Host "`n"; Write-Host "[WARN] $msg" -ForegroundColor Yellow }
+    function Write-Error { param([string]$msg) Write-Host "`n"; Write-Host "[ERROR] $msg" -ForegroundColor Red }
+    function Write-Debug { param([string]$msg) Write-Host "`n"; Write-Host "[DEBUG] $msg" -ForegroundColor DarkGray }
 
     
     # ==========================================
@@ -66,7 +66,7 @@ try {
  |_| |_/_/   \_\\_/   |___/_/   \_\_| \_|
                                          
       Robotik & Yapay Zeka
-      v2.1.5 (Clean Bar)
+      v2.1.6 (Aligned)
     
 '@
     Write-Host $logo -ForegroundColor Cyan
