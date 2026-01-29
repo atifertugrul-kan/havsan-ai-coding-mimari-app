@@ -6,7 +6,7 @@
 
 **Yöntem 2: Manuel (PowerShell)**
 1. Proje ana klasörüne gir.
-2. `antigravity-kurulum.ps1` dosyasına **Sağ Tıkla**.
+2. `script\antigravity-kurulum.ps1` dosyasına **Sağ Tıkla**.
 3. **Run with PowerShell** seç.
 
 **Manuel Yöntem (Önerilmez):**
