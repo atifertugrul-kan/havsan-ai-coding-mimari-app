@@ -16,6 +16,22 @@ try {
 
     Clear-Host
     
+    # Global degiskenleri en basta tanimla
+    $global:totalSteps = 7
+    $global:currentStep = 0
+
+    function Update-Progress {
+        param([string]$activity)
+        $global:currentStep++
+        if ($global:totalSteps -gt 0) {
+            $percent = [math]::Round(($global:currentStep / $global:totalSteps) * 100)
+        }
+        else {
+            $percent = 0
+        }
+        Write-Progress -Activity "Antigravity Yukleniyor..." -Status "$percent% - $activity" -PercentComplete $percent
+    }
+    
     # Logo Yazdirma
     Write-Host "
   _   _    _ __     __ ___    _    _   _ 
@@ -25,15 +41,19 @@ try {
  |_| |_/_/   \_\\_/   |___/_/   \_\_| \_|
                                          
       Robotik & Yapay Zeka
-      v2.1.1 (Doc Fixes)
+      v2.1.2 (Patched)
 " -ForegroundColor Cyan
 
+    Write-Host "    Atif Ertugrul Kan" -ForegroundColor Yellow
+    Write-Host "    Kurumsal Gelistirici Altyapi Mimari & HAVSAN CTO" -ForegroundColor DarkGray
+    Write-Host ""
     Write-Header "HAVSAN Antigravity Kurulum ve Guncelleme"
 
     Write-Host "Bu sihirbaz ne yapiyor?" -ForegroundColor Yellow
     Write-Host "1. Antigravity IDE kurallarini (Rules, Skills, Workflows) yukler veya gunceller." -ForegroundColor Gray
     Write-Host "2. Proje standartlarinin herkes icin ayni olmasini saglar." -ForegroundColor Gray
     Write-Host "3. Eski ayarlari otomatik yedekler." -ForegroundColor Gray
+    Write-Host "4. Projeyi Git sunucusundan otomatik gunceller." -ForegroundColor Gray
     Write-Host ""
 
     # Dizinleri Belirleme
@@ -41,15 +61,9 @@ try {
     $PROJECT_ROOT = Split-Path -Parent $SCRIPT_DIR
     $SOURCE_DIR = "$PROJECT_ROOT\gemini"
     $TARGET_DIR = "$env:USERPROFILE\.gemini"
-    $totalSteps = 6
-    $currentStep = 0
+    
+    # Progress bar fonksiyonu yukarida tanimlandi
 
-    function Update-Progress {
-        param([string]$activity)
-        $global:currentStep++
-        $percent = [math]::Round(($global:currentStep / $global:totalSteps) * 100)
-        Write-Progress -Activity "Antigravity Yukleniyor..." -Status "$percent% - $activity" -PercentComplete $percent
-    }
 
     Write-Info "Calisma Dizini: $PROJECT_ROOT"
     Write-Info "Kaynak Klasor:  $SOURCE_DIR"
