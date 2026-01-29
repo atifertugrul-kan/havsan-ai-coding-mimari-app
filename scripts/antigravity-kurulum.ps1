@@ -25,6 +25,7 @@ try {
  |_| |_/_/   \_\\_/   |___/_/   \_\_| \_|
                                          
       Robotik & Yapay Zeka
+      v2.0.1 (Unified)
 " -ForegroundColor Cyan
 
     Write-Header "HAVSAN Antigravity Kurulum ve Guncelleme"
@@ -40,16 +41,24 @@ try {
     $PROJECT_ROOT = Split-Path -Parent $SCRIPT_DIR
     $SOURCE_DIR = "$PROJECT_ROOT\gemini"
     $TARGET_DIR = "$env:USERPROFILE\.gemini"
+    $totalSteps = 6
+    $currentStep = 0
+
+    function Update-Progress {
+        param([string]$activity)
+        $global:currentStep++
+        $percent = [math]::Round(($global:currentStep / $global:totalSteps) * 100)
+        Write-Progress -Activity "Antigravity Yukleniyor..." -Status "$percent% - $activity" -PercentComplete $percent
+    }
 
     Write-Info "Calisma Dizini: $PROJECT_ROOT"
     Write-Info "Kaynak Klasor:  $SOURCE_DIR"
     Write-Info "Hedef Klasor:   $TARGET_DIR"
 
-    Write-Info "Hedef Klasor:   $TARGET_DIR"
-
     # ============================================
     # Adim 0: Git Guncelleme (Otomatik Pull)
     # ============================================
+    Update-Progress "Git Pull yapiliyor"
     Write-Header "0. Proje Guncelleniyor (Git Pull)"
     
     if (Test-Path "$PROJECT_ROOT\.git") {
@@ -77,6 +86,7 @@ try {
     # ============================================
     # Adim 1: Kontroller
     # ============================================
+    Update-Progress "Hedef kontrol ediliyor"
     Write-Header "1. Ortam Kontrolu"
 
     if (-not (Test-Path $SOURCE_DIR)) {
@@ -97,6 +107,7 @@ try {
     # ============================================
     # Adim 2: Yedekleme
     # ============================================
+    Update-Progress "Yedekleme yapiliyor"
     Write-Header "2. Yedekleme"
 
     $timestamp = Get-Date -Format 'yyyy-MM-dd_HH-mm-ss'
@@ -135,11 +146,13 @@ try {
     # ============================================
     # Adim 3: Yukleme / Guncelleme
     # ============================================
+    Update-Progress "Dosyalar kopyalaniyor"
     Write-Header "3. Dosyalar Yukleniyor"
 
     $filesCopied = 0
 
     # GEMINI.dist.md -> GEMINI.md
+    Update-Progress "Global Kurallar yukleniyor"
     $distFile = "$SOURCE_DIR\GEMINI.dist.md"
     Write-Debug "Global kurallar kopyalaniyor: $distFile"
     if (Test-Path $distFile) {
@@ -164,6 +177,7 @@ try {
     }
 
     # Antigravity Klasorleri
+    Update-Progress "Skills ve Workflows yukleniyor"
     $antigravitySource = "$SOURCE_DIR\antigravity"
     $antigravityTarget = "$TARGET_DIR\antigravity"
 
@@ -201,12 +215,14 @@ try {
     else {
         Write-Warning "antigravity kaynak klasoru bulunamadi!"
     }
+    
+    Update-Progress "Tamamlandi"
 
     # ============================================
     # Bitis
     # ============================================
     if ($filesCopied -gt 0) {
-        Write-Header "ISLEM BASARILI! ($filesCopied oge)"
+        Write-Header "ISLEM BASARILI! (v2.0.1 Yuklendi)"
         
         Write-Host "`nONEMLI HATIRLATMA:" -ForegroundColor Yellow
         Write-Host "  1. Antigravity IDE'ye git" -ForegroundColor Cyan
