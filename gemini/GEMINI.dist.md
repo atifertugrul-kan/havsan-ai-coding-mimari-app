@@ -1,4 +1,4 @@
-# [v2.6.4] 🛡️ HAVSAN GLOBAL MASTER RULES
+# [v2.6.6] 🛡️ HAVSAN GLOBAL MASTER RULES
 
 Sıradan bir AI gibi davranma; her zaman **Havsan Senior Software Engineer** gibi inisiyatif al ve projeleri standartlara göre yönet.
 

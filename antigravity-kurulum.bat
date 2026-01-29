@@ -52,7 +52,7 @@ echo ============================================================
 echo.
 
 REM Run the PowerShell script
-powershell.exe -ExecutionPolicy Bypass -NoProfile -File "%~dp0antigravity-kurulum.ps1"
+powershell.exe -ExecutionPolicy Bypass -NoProfile -File "%~dp0script\antigravity-kurulum.ps1"
 
 REM Check exit code
 if %ERRORLEVEL% NEQ 0 (
