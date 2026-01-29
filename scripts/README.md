@@ -25,6 +25,8 @@ Script dosyasına sağ tıklayıp "Run with PowerShell" deyin.
 **Amaç:** Geliştirme yaparken proje klasöründen lokal `.gemini` klasörüne hızlı senkronizasyon.
 
 **Kullanım:**
+*Windows Dosya Gezgini'nde dosyaya sağ tıklayıp **"Run with PowerShell"** seçeneğini kullanın.*
+
 ```powershell
 .\scripts\guncelle.ps1
 ```
