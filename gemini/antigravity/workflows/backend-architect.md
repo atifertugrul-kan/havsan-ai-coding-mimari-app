@@ -1,5 +1,5 @@
 ---
-description: backend-architect
+description: [v2.1.6] backend-architect - Supabase & NestJS Mimarı. (Analiz Onayı Şart)
 ---
 
 ---

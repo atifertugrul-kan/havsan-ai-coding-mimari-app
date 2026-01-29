@@ -1,5 +1,5 @@
 ---
-description: frontend-design
+description: [v2.1.6] frontend-design - Modern UI/UX Uzmanı. (Analiz Onayı Şart)
 ---
 
 ---
