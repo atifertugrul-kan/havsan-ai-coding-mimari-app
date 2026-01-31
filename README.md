@@ -9,7 +9,7 @@
 
 # 🚀 HAVSAN Antigravity
 
-**Versiyon:** 2.6.6 (Stable)
+**Versiyon:** 2.6.7 (Stable)
 **Amaç:** HAVSAN Yapay Zeka & Robotik ekibi için standart geliştirme ortamı.
 
 ---
@@ -135,7 +135,12 @@ C:\Users\[Kullanıcı]\.gemini\
 
 ## 📝 Changelog
 
-### v2.6.6 (Stable)
+### v2.6.7 (Stable)
+- ✅ Proje başlangıç klasör yapısı kuralı eklendi
+- ✅ `database/docs/db-design.md` ve `backend/docs/api-design.md` otomatik oluşturulacak
+- ✅ Tüm temel klasörler `.gitignore` ile birlikte başlangıçta hazır olacak
+
+### v2.6.6
 - ✅ İnternet bağlantısı kontrolü (startup'ta)
 - ✅ Script `script/` klasörüne taşındı
 - ✅ Popup TopMost (IDE üstünde kalır)
@@ -241,12 +246,23 @@ Antigravity IDE sağ üstten **Settings**:
 
 ---
 
-## 📂 Klasör Yapısı
+## 📂 Proje Başlangıç Klasör Yapısı (Otomatik)
+
+**Yeni Kural (v2.6.7):** Proje başladığında `.gitignore` ve `frontend/` ile birlikte tüm klasörler otomatik oluşturulur:
 
 ```
 proje/
-├── docs/               # Analiz (TEK KAYNAK)
-├── frontend/           # React/Next.js
-├── backend/            # FastAPI/Node.js
-└── docker-compose.yml  # Tüm sistem
+├── .gitignore              # Git ignore kuralları
+├── docs/
+│   └── ANALIZ/             # Analiz dosyaları (TEK KAYNAK)
+├── database/
+│   └── docs/
+│       └── db-design.md    # Veritabanı tasarım notları (boş template)
+├── backend/
+│   └── docs/
+│       └── api-design.md   # API tasarım dokümantasyonu (boş template)
+├── frontend/               # React/Next.js (normal yapılandırma)
+└── docker-compose.yml      # Tüm sistem
 ```
+
+**Amaç:** Geliştiriciler hangi dosyayı nereye koyacağını bilir, proje düzenli başlar.
