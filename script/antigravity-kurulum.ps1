@@ -9,12 +9,11 @@ try {
 
     # --- CHANGELOG ---
     $CHANGELOG = @'
-    [v2.6.6 YENILIKLER]
-    - Fix: "Antigravity IDE" kisayolu ile dogru baslatma
-    - Fix: Konsol karakter kodlamasi (UTF-8) ve Emojiler duzeltildi
-    - Fix: Popup TopMost (IDE ustunde kalir)
-    - Branding: Gorsel butunluk saglandi
-    - Otomasyon: Akilli Senkronizasyon (Admin Push / Dev Pull)
+    [v2.6.7 YENILIKLER]
+    - Proje baslangic klasor yapisi kurali eklendi (database/, backend/)
+    - Global versiyon yonetimi sistemi kuruldu
+    - Tum bilesenler (Rules, Workflows, Skills) tek versiyonda senkronize
+    - Git commit mesajlarina versiyon ekleme zorunlulugu getirildi
 '@
 
     # Helper Functions
@@ -96,7 +95,7 @@ try {
     Write-Host ""
     Write-Host "    Atif Ertugrul Kan" -F Yellow
     Write-Host "    Kurumsal Gelistirici Altyapi Mimari & HAVSAN CTO" -F DarkGray
-    Write-Host "    v2.6.6 (Stable)" -F Gray
+    Write-Host "    v2.6.7 (Stable)" -F Gray
     Write-Host ""
     Write-Host ""
     Write-Host $CHANGELOG -F Green
@@ -219,7 +218,7 @@ try {
     $cnt += Copy-Safe "$SRC\antigravity\workflows" "$TGT\antigravity\workflows" $true
 
     if ($cnt -gt 0) {
-        Log-H "ISLEM BASARILI! (v2.6.6)"
+        Log-H "ISLEM BASARILI! (v2.6.7)"
         Write-Host ""
         
         # --- FEATURE: Force Refresh Prompt (BEFORE IDE Launch) ---
