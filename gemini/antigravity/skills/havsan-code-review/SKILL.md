@@ -1,4 +1,5 @@
 ---
+version: 2.6.7
 name: havsan-code-review
 description: Performs a comprehensive code review based on HAVSAN Engineering Standards. Trigger this skill when the user asks to "review code", "check for errors", or before finalizing a task.
 ---

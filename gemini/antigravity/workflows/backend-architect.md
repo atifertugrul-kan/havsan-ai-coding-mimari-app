@@ -1,5 +1,6 @@
 ---
-description: "[v2.6.6] backend-architect - Supabase & NestJS Mimarı. (Analiz Onayı Şart)"
+version: 2.6.7
+description: "[v2.6.7] backend-architect - Supabase & NestJS Mimarı. (Analiz Onayı Şart)"
 ---
 
 ---

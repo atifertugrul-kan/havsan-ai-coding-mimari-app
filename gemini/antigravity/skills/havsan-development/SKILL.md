@@ -1,4 +1,5 @@
 ---
+version: 2.6.7
 name: havsan-development
 description: 🛑 STOP! READ THIS FIRST. This is the MANDATORY protocol for ALL new projects. You are FORBIDDEN from creating 'frontend' or 'backend' folders until the Analysis phase is approved. YOUR FIRST ACTION MUST BE TO ASK FOR THE USER'S NAME.
 ---

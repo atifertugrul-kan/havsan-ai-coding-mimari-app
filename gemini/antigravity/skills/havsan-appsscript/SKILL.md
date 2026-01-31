@@ -1,4 +1,5 @@
 ---
+version: 2.6.7
 name: havsan-appsscript
 description: Master guide for Google Apps Script projects in HAVSAN. Enforces Dockerized Clasp usage, safety checks for deployments, and environment isolation. Use this skill when you detect `.gs`, `appsscript.json` files or when the user mentions "Apps Script" / "Clasp".
 ---
